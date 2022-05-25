@@ -33,7 +33,7 @@ export type ViewProps = ThemeProps & DefaultView["props"];
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor(
-    { light: lightColor || "#333", dark: darkColor || "ccc" },
+    { light: lightColor || "#222", dark: darkColor || "ddd" },
     "text"
   );
 

@@ -17,7 +17,7 @@ import NotificationsScreen from "../../screens/notifications/NotificationsScreen
 import SearchScreen from "../../screens/search/SearchScreen";
 import SpacesScreen from "../../screens/spaces/SpacesScreen";
 
-import { RootTabParamList, RootTabScreenProps } from "../../types";
+import { RootTabParamList, RootTabScreenProps } from "../types";
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
