@@ -3,19 +3,20 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome, Fontisto, Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Fontisto, Ionicons, Octicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import * as React from "react";
-import { Pressable } from "react-native";
-import Svg, { Path } from "react-native-svg";
-import SvgIcon from "../../components/icons/svg/tabIcons";
-
+import { Image, Pressable } from "react-native";
+import SvgIcon from "../../components/icons/svg/TabIcons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
+import HomeScreen from "../../screens/home/HomeScreen";
+import MessagesScreen from "../../screens/messages/MessagesScreen";
+import NotificationsScreen from "../../screens/notifications/NotificationsScreen";
+import SearchScreen from "../../screens/search/SearchScreen";
+import SpacesScreen from "../../screens/spaces/SpacesScreen";
 
-import TabOneScreen from "../../screens/TabOneScreen";
-import TabTwoScreen from "../../screens/TabTwoScreen";
 import { RootTabParamList, RootTabScreenProps } from "../../types";
 
 /**
@@ -36,7 +37,7 @@ export function BottomTabNavigator() {
       }}>
       <BottomTab.Screen
         name="Home"
-        component={TabOneScreen}
+        component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<"Home">) => ({
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
@@ -60,7 +61,7 @@ export function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Search"
-        component={TabTwoScreen}
+        component={SearchScreen}
         options={{
           title: "Search",
           tabBarIcon: ({ color, focused }) => (
@@ -70,7 +71,7 @@ export function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Spaces"
-        component={TabTwoScreen}
+        component={SpacesScreen}
         options={{
           title: "Spaces",
           tabBarIcon: ({ color, focused }) => (
@@ -80,7 +81,7 @@ export function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Notifications"
-        component={TabTwoScreen}
+        component={NotificationsScreen}
         options={{
           title: "Notifications",
           tabBarIcon: ({ color, focused }) => (
@@ -90,7 +91,7 @@ export function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Messages"
-        component={TabTwoScreen}
+        component={MessagesScreen}
         options={{
           title: "Messages",
           tabBarIcon: ({ color, focused }) => (
@@ -115,21 +116,59 @@ function TabBarIcon({
 }) {
   const colorScheme = useColorScheme();
   if (name === "spaces") {
+    if (focused) {
+      return (
+        <Image
+          source={require("../../assets/icons/images/SpacesBlue.png")}
+          width={24}
+          height={22}
+        />
+      );
+    }
     return (
-      <Ionicons
-        name={focused ? "mic" : "mic-outline"}
-        size={28}
-        color={focused ? Colors[colorScheme].primary : Colors[colorScheme].tint}
+      <Image
+        source={require("../../assets/icons/images/Spaces.png")}
+        width={24}
+        height={22}
       />
     );
   }
+  // if (name === "spaces") {
+  //   return (
+  //     <Ionicons
+  //       name={focused ? "mic" : "mic-outline"}
+  //       size={35}
+  //       color={focused ? Colors[colorScheme].primary : Colors[colorScheme].dark}
+  //     />
+  //   );
+  // }
 
   if (name === "search") {
     return (
       <Ionicons
         name={focused ? "ios-search" : "ios-search-outline"}
         size={28}
-        color={focused ? Colors[colorScheme].primary : Colors[colorScheme].tint}
+        color={focused ? Colors[colorScheme].primary : Colors[colorScheme].dark}
+      />
+    );
+  }
+
+  if (name === "messages") {
+    return (
+      <Ionicons
+        name={focused ? "mail" : "mail-outline"}
+        size={28}
+        color={focused ? Colors[colorScheme].primary : Colors[colorScheme].dark}
+      />
+    );
+  }
+
+  if (name === "notifications") {
+    return (
+      <Octicons
+        name={focused ? "bell-fill" : "bell"}
+        size={24}
+        color={focused ? Colors[colorScheme].primary : Colors[colorScheme].dark}
       />
     );
   }
