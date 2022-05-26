@@ -119,7 +119,7 @@ function TabBarIcon({
     if (focused) {
       return (
         <Image
-          source={require("../../assets/icons/images/SpacesBlue.png")}
+          source={require("../../../assets/icons/images/SpacesBlue.png")}
           width={24}
           height={22}
         />
@@ -127,7 +127,7 @@ function TabBarIcon({
     }
     return (
       <Image
-        source={require("../../assets/icons/images/Spaces.png")}
+        source={require("../../../assets/icons/images/Spaces.png")}
         width={24}
         height={22}
       />

@@ -1,8 +1,9 @@
-import { StyleSheetProperties } from "react-native";
 import { plugin } from "twrnc";
-import { Style } from "twrnc/dist/esm/types";
-import { tintColorPrimary } from "./constants/Colors";
+import { tintColorPrimary } from "./src/constants/Colors";
+import { AddedUtilities, Style } from "twrnc/dist/esm/types";
 
+import { string } from "yup";
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line no-undef
 module.exports = {
@@ -33,33 +34,37 @@ module.exports = {
   },
   plugins: [
     plugin(({ addUtilities }) => {
-      addUtilities({
-        btn: {
-          //rounded-full p-3 w-full bg-primary
-          padding: 12,
-          borderRadius: 999999,
-          textTranform: `uppercase`,
-          backgroundColor: tintColorPrimary,
-          width: "100%",
-        },
-        "btn-text": {
-          fontWeight: "600",
-          fontSize: 20,
-        },
-        "resize-repeat": {
-          resizeMode: `repeat`,
-        },
-      });
+      addUtilities(utilities);
     }),
   ],
 };
 
-// module.exports = {
-//   screens: {
-//     sm: "380px",
-//     md: "420px",
-//     lg: "680px",
-//   },
-//
-//
-// };
+const utilities = {
+  //}: Record<string, ViewStyle | TextStyle | ImageStyle> = {
+  btn: {
+    //rounded-full p-3 w-full bg-primary
+    padding: 12,
+    borderRadius: 999999,
+    textTransform: `uppercase`,
+    backgroundColor: tintColorPrimary,
+    // flex: 1,
+    // width: "100%",
+  },
+  "btn-container-small": {
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+  },
+  "btn-small": {
+    alignSelf: "flex-end",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+  },
+  "btn-text": {
+    fontWeight: "600",
+    fontSize: 20,
+  },
+  "resize-repeat": {
+    resizeMode: `repeat`,
+  },
+};

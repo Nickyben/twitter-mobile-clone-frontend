@@ -19,6 +19,7 @@ import { RootStackParamList } from "./types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { BottomTabNavigator } from "./Tabs/BottomTab";
 import { OnboardingStackNavigator } from "./Stacks/OnboardingStack";
+import { TwitterTheme } from "../constants/TwitterTheme";
 
 export default function Navigation({
   colorScheme,
@@ -28,7 +29,7 @@ export default function Navigation({
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === "dark" ? DarkTheme : TwitterTheme}>
       <OnboardingStackNavigator />
       {/* <RootNavigator /> */}
     </NavigationContainer>

@@ -3,7 +3,7 @@
     "name": "twitter-clone-mobile",
     "slug": "twitter-clone-mobile",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/twitterIcon.png",
     "primaryColor": "#1DA1F2",
     "scheme": "myapp",

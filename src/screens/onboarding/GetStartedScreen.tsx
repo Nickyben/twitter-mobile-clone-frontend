@@ -4,18 +4,22 @@ import { Text, View } from "../../components/Themed";
 import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
+import { useHeaderHeight } from "@react-navigation/elements";
+
+// ...
 
 type Props = OnboardingStackScreenProps<"GetStarted"> & {
   prop1: string;
 };
 
 const GetStartedScreen = ({ navigation }: Props) => {
+  const headerHeight = useHeaderHeight();
   return (
     <ScrollView
-      style={tw`bg-white p-7`}
-      contentContainerStyle={tw`flex items-center justify-center min-h-full`}>
+      style={tw` p-7`}
+      contentContainerStyle={tw`flex items-center justify-center min-h-full `}>
       <View style={tw`w-full `}>
-        <Text style={tw.style(`text-3xl font-bold  text-center`)}>
+        <Text style={tw.style(`text-3xl font-bold  text-justify`)}>
           See what's happening in the world right now.
         </Text>
         <Button
@@ -23,7 +27,7 @@ const GetStartedScreen = ({ navigation }: Props) => {
           buttonStyle={tw`btn`}
           containerStyle={tw`mt-6`}
           titleStyle={tw`btn-text`}
-          onPress={() => navigation.navigate("VerifyCode")}
+          onPress={() => navigation.navigate("Username")}
         />
       </View>
     </ScrollView>
