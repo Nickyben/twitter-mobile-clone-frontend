@@ -4,7 +4,6 @@ import { Text, View } from "../../components/Themed";
 import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
-import { useHeaderHeight } from "@react-navigation/elements";
 
 // ...
 
@@ -13,7 +12,6 @@ type Props = OnboardingStackScreenProps<"GetStarted"> & {
 };
 
 const GetStartedScreen = ({ navigation }: Props) => {
-  const headerHeight = useHeaderHeight();
   return (
     <ScrollView
       style={tw` p-7`}

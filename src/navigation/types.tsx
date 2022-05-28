@@ -10,6 +10,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { CreateAccountInputs } from "../validation/types";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -59,10 +60,10 @@ export type Extras = {
 export type OnboardingStackParamList = Extras & {
   GetStarted: undefined;
   Username: undefined;
-  CreateAccount: undefined;
-  VerifyCode: undefined;
-  Password: undefined;
-  ProfilePicture: undefined;
+  CreateAccount: { username: string };
+  VerifyCode: CreateAccountInputs;
+  Password: { verificationCode: number };
+  ProfilePicture: { password: string };
   Bio: undefined;
   CustomizeExperience: undefined;
   Languages: undefined;

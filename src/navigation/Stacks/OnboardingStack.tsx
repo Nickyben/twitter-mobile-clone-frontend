@@ -12,8 +12,12 @@ import { ColorSchemeName, Image, Pressable } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import ModalScreen from "../../screens/ModalScreen";
+import CreateAccountScreen from "../../screens/onboarding/CreateAccountScreen";
 import GetStartedScreen from "../../screens/onboarding/GetStartedScreen";
+import PasswordScreen from "../../screens/onboarding/PasswordScreen";
+import ProfilePictureScreen from "../../screens/onboarding/ProfilePictureScreen";
 import UsernameScreen from "../../screens/onboarding/UserNameScreen";
+import VerifyCodeScreen from "../../screens/onboarding/VerifyCodeScreen";
 
 import { OnboardingStackParamList, OnboardingStackScreenProps } from "../types";
 
@@ -47,10 +51,22 @@ export function OnboardingStackNavigator() {
       }}>
       <Stack.Screen name="GetStarted" component={GetStartedScreen} options={{}} />
       <Stack.Screen name="Username" component={UsernameScreen} options={{}} />
+      <Stack.Screen
+        name="CreateAccount"
+        component={CreateAccountScreen}
+        options={{}}
+      />
+      <Stack.Screen name="VerifyCode" component={VerifyCodeScreen} options={{}} />
+      <Stack.Screen name="Password" component={PasswordScreen} options={{}} />
+      <Stack.Screen
+        name="ProfilePicture"
+        component={ProfilePictureScreen}
+        options={{}}
+      />
       <Stack.Screen name="Notfound" component={FakeComponent} options={{}} />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
+      {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="VerifyCode" component={ModalScreen} options={{}} />
-      </Stack.Group>
+      </Stack.Group> */}
     </Stack.Navigator>
   );
 }

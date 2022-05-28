@@ -39,6 +39,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
+    "react-native-confirmation-code-field": "^7.3.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-reanimated": "~2.8.0",
@@ -48,12 +49,14 @@
     "react-native-web": "0.17.7",
     "tailwindcss": "^3.0.24",
     "twrnc": "^3.3.2",
+    "validator": "^13.7.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.66.13",
+    "@types/validator": "^13.7.2",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "eslint": "^8.14.0",
