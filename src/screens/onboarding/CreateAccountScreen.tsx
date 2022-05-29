@@ -37,7 +37,7 @@ const CreateAccountScreen = ({ navigation }: Props) => {
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={CreateAccountValidationSchema}
+      validationSchema={CreateAccountValidationSchema}
       onSubmit={handleValidSubmit}>
       {({
         values,

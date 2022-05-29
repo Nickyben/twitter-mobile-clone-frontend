@@ -66,6 +66,7 @@ export type OnboardingStackParamList = Extras & {
   ProfilePicture: { password: string };
   Bio: undefined;
   CustomizeExperience: undefined;
+  ConnectAddressBook: undefined;
   Languages: undefined;
   InterestedIn: undefined;
   Suggestions: undefined;

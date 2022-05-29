@@ -20,7 +20,7 @@ const UsernameScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
   const handleValidSubmit = useCallback((values: Values) => {
     // const { username } = values || {};
-    Alert.alert(JSON.stringify(values));
+    //Alert.alert(JSON.stringify(values));
     navigation.navigate("CreateAccount", values);
   }, []);
 

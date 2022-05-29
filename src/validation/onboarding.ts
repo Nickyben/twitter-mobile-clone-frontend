@@ -7,7 +7,7 @@ const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8
 export const UsernameValidationSchema = yup.object().shape({
   username: yup
     .string()
-    .required("Please, provide your username!")
+    // .required("Please, provide your username!")
     .min(5, "Your username cannot be less than 5 characters long!")
     .max(10, "Your username cannot exceed 10 characters!"),
 });
@@ -15,24 +15,33 @@ export const UsernameValidationSchema = yup.object().shape({
 export const CreateAccountValidationSchema = yup.object().shape({
   name: yup
     .string()
-    .required("Please, provide your username!")
+    // .required("Please, provide your name!")
     .min(2, "Your name cannot be be less than 2 characters long")
-    .max(15, "Your username cannot exceed 15 characters !"),
+    .max(15, "Your name cannot exceed 15 characters !"),
   phoneOrEmail: yup
     .string()
-    .required("Please, provide a phone number or email address!")
+    // .required("Please, provide a phone number or email address!")
     .matches(phoneOrEmailRegExp, "Phone number or email address is not valid"),
-  dateOfBirth: yup.string().required("Please, provide your date of birth!"),
+  dateOfBirth: yup.string(),
+  // .required("Please, provide your date of birth!"),
 } as Record<keyof CreateAccountInputs, never>);
 
 export const PasswordValidationSchema = yup.object().shape({
   password: yup
     .string()
-    .required("Please, provide your password!")
+    // .required("Please, provide your password!")
     .min(8, "Your password cannot be less than 8 characters long!")
     .max(15, "Your password cannot exceed 15 characters!")
     .matches(
       passwordRegExp,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
+});
+
+export const BioValidationSchema = yup.object().shape({
+  bio: yup
+    .string()
+    // .required("Please, provide your bio!")
+    .min(5, "Your bio cannot be less than 5 characters long!")
+    .max(150, "Your bio cannot exceed 150 characters!"),
 });

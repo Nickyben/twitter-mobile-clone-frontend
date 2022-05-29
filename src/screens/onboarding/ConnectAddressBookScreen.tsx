@@ -18,7 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "./../../hooks/useColorScheme";
 
-type Props = OnboardingStackScreenProps<"CustomizeExperience"> & {
+type Props = OnboardingStackScreenProps<"ProfilePicture"> & {
   prop1: string;
 };
 type ExperienceSetting = {
@@ -27,7 +27,7 @@ type ExperienceSetting = {
   value: boolean;
 };
 
-const CustomizeExpScreen = ({ navigation }: Props) => {
+const ConnectAddressBookScreen = ({ navigation }: Props) => {
   const [profileImage, setProfileImage] = useState<never>();
   const colorScheme = useColorScheme();
   const headerHeight = useHeaderHeight();
@@ -47,8 +47,8 @@ const CustomizeExpScreen = ({ navigation }: Props) => {
     Array<ExperienceSetting>
   >(initialExperienceSetting);
 
-  const handleSubmit = useCallback(() => {
-    navigation.navigate("ConnectAddressBook");
+  const handleValidSubmit = useCallback(() => {
+    navigation.navigate("Bio");
   }, []);
 
   const changeSetting = useCallback((value, description) => {
@@ -70,55 +70,44 @@ const CustomizeExpScreen = ({ navigation }: Props) => {
     <Fragment>
       <ScrollView
         style={tw` p-7 py-0 `}
-        contentContainerStyle={tw` items-center   pb-5`}>
-        <View style={tw`w-full   mt-[${headerHeight}px] pt-7`}>
-          <OnboardHeadTexts title={"Customize your experience"} description="" />
+        contentContainerStyle={tw` items-center bg-purple-400  pb-5    `}>
+        <View style={tw`w-full   pt-7 h-full mt-[${headerHeight}px]`}>
+          <OnboardHeadTexts
+            title={
+              "Connect your address book to find people you may know on Twitter"
+            }
+            description=""
+          />
         </View>
-        {experienceSetting.map(({ title, description, value }) => {
-          return (
-            <View key={title} style={tw`w-full  mt-6 `}>
-              <Text style={tw`text-[21px] font-bold   `}>{title}</Text>
-              <View style={tw`w-full mt-6 flex-row   justify-between items-start  `}>
-                <Text style={tw`text-[16px] font-bold text-gray-600 flex-1 `}>
-                  {description}
-                </Text>
-                <Switch
-                  style={tw`  ml-4 -mt-3 `}
-                  trackColor={{
-                    false: Colors[colorScheme].gray,
-                    true: Colors[colorScheme].primary,
-                  }}
-                  thumbColor={
-                    value
-                      ? Colors[colorScheme].background
-                      : Colors[colorScheme].lightGray
-                  }
-                  ios_backgroundColor={Colors[colorScheme].dark}
-                  onValueChange={(value) => changeSetting(value, description)}
-                  value={value}
-                />
-              </View>
-            </View>
-          );
-        })}
-        <Text style={tw`text-[16px] font-bold text-gray-600 flex-1  mt-6`}>
-          For more details about these settings, visit the{" "}
-          <Text
-            style={tw`text-[16px] font-bold text-primary  `}
-            onPress={() => Alert.alert("Not yet available")}>
-            Help Center
-          </Text>
-        </Text>
       </ScrollView>
+      <Text
+        style={tw`text-[16px] font-semibold text-gray-500 text-justify mt-6 px-7 `}>
+        Contacts from you address book will be uploaded to Twitter on an ongoing
+        basis to help connect your friends and personalize your content, such as
+        making suggestions for you and others. You can turn off syncing and remove
+        previously uploaded contacts in your settings{" "}
+        <Text
+          style={tw`text-[16px] font-bold text-primary  text-justify `}
+          onPress={() => Alert.alert("Not yet available")}>
+          Learn more
+        </Text>
+      </Text>
       <Button
-        title="Next"
+        title="Sync contacts"
         buttonStyle={tw`btn `}
         containerStyle={tw`btn-container-big`}
         titleStyle={tw`btn-text`}
-        onPress={handleSubmit}
+        onPress={() => {
+          return;
+        }}
       />
+      <Text
+        style={tw`mb-4 -mt-2 text-primary text-center`}
+        onPress={handleValidSubmit}>
+        Not now
+      </Text>
     </Fragment>
   );
 };
 
-export default CustomizeExpScreen;
+export default ConnectAddressBookScreen;

@@ -12,7 +12,10 @@ import { ColorSchemeName, Image, Pressable } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import ModalScreen from "../../screens/ModalScreen";
+import BioScreen from "../../screens/onboarding/BioScreen";
+import ConnectAddressBookScreen from "../../screens/onboarding/ConnectAddressBookScreen";
 import CreateAccountScreen from "../../screens/onboarding/CreateAccountScreen";
+import CustomizeExpScreen from "../../screens/onboarding/CustomizeExpScreen";
 import GetStartedScreen from "../../screens/onboarding/GetStartedScreen";
 import PasswordScreen from "../../screens/onboarding/PasswordScreen";
 import ProfilePictureScreen from "../../screens/onboarding/ProfilePictureScreen";
@@ -63,6 +66,17 @@ export function OnboardingStackNavigator() {
         component={ProfilePictureScreen}
         options={{}}
       />
+      <Stack.Screen
+        name="CustomizeExperience"
+        component={CustomizeExpScreen}
+        options={{}}
+      />
+      <Stack.Screen
+        name="ConnectAddressBook"
+        component={ConnectAddressBookScreen}
+        options={{}}
+      />
+      <Stack.Screen name="Bio" component={BioScreen} options={{}} />
       <Stack.Screen name="Notfound" component={FakeComponent} options={{}} />
       {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="VerifyCode" component={ModalScreen} options={{}} />

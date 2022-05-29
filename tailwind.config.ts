@@ -28,6 +28,7 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
     // mt-6   py-2 border-t border-gray-300
     marginTop: 24,
     paddingVertical: 15,
+    paddingBottom: 25,
     paddingHorizontal: 28,
   },
   "btn-small": {
@@ -58,7 +59,7 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
   "profile-add-icon": {
     ...tw`bg-white absolute absolute -bottom-3 
             right-0 rounded-full p-5 text-center
-             border border-gray-400`,
+             border border-gray-300`,
   },
 };
 

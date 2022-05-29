@@ -1,5 +1,5 @@
 import tw from "../../styles/tailwind/tailwind";
-import React, { Fragment, useCallback } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import { Text, View } from "../../components/Themed";
 import { Formik } from "formik";
 import { Alert, KeyboardAvoidingView, ScrollView, TextInput } from "react-native";
@@ -10,7 +10,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { PasswordValidationSchema } from "../../validation/onboarding";
 import { Ionicons } from "@expo/vector-icons";
 
-type Props = OnboardingStackScreenProps<"Password"> & {
+type Props = OnboardingStackScreenProps<"ProfilePicture"> & {
   prop1: string;
 };
 type Values = {
@@ -18,11 +18,10 @@ type Values = {
 };
 
 const ProfilePictureScreen = ({ navigation }: Props) => {
+  const [profileImage, setProfileImage] = useState<never>();
   const headerHeight = useHeaderHeight();
-  const handleValidSubmit = useCallback((values: Values) => {
-    // const { password } = values || {};
-    Alert.alert(JSON.stringify(values));
-    navigation.navigate("ProfilePicture", values);
+  const handleValidSubmit = useCallback(() => {
+    navigation.navigate("Bio");
   }, []);
 
   return (
@@ -32,7 +31,7 @@ const ProfilePictureScreen = ({ navigation }: Props) => {
         contentContainerStyle={tw` items-center   pb-5`}>
         <View style={tw`w-full   mt-[${headerHeight}px] pt-7`}>
           <OnboardHeadTexts
-            title={"Pick a profile picture."}
+            title={"Pick a profile picture"}
             description="Have a favorite selfie? Upload it now."
           />
         </View>
@@ -53,7 +52,7 @@ const ProfilePictureScreen = ({ navigation }: Props) => {
         </Avatar>
       </ScrollView>
       <Button
-        disabled={!true}
+        disabled={!profileImage}
         title="Next"
         buttonStyle={tw`btn `}
         containerStyle={tw`btn-container-big`}
@@ -62,9 +61,7 @@ const ProfilePictureScreen = ({ navigation }: Props) => {
           return;
         }}
       />
-      <Text
-        style={tw`mb-4 text-primary text-center`}
-        onPress={() => Alert.alert("Not yet available")}>
+      <Text style={tw`mb-4 text-primary text-center`} onPress={handleValidSubmit}>
         Skip for now
       </Text>
     </Fragment>
