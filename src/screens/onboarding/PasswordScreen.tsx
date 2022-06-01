@@ -20,7 +20,7 @@ const PasswordScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
   const handleValidSubmit = useCallback((values: Values) => {
     // const { password } = values || {};
-    Alert.alert(JSON.stringify(values));
+    // Alert.alert(JSON.stringify(values));
     navigation.navigate("ProfilePicture", values);
   }, []);
 

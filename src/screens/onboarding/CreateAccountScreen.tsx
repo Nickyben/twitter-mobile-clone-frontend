@@ -24,7 +24,7 @@ const CreateAccountScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
   const handleValidSubmit = useCallback((values: CreateAccountInputs) => {
     // const { name, phoneOrEmail, dateOfBirth } = values || {};
-    Alert.alert(JSON.stringify(values));
+    // Alert.alert(JSON.stringify(values));
     navigation.navigate("VerifyCode", values);
   }, []);
 

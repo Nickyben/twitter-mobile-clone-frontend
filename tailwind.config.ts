@@ -15,7 +15,14 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
     // flex: 1,
     // width: "100%",
   },
-
+  "btn-small": {
+    alignSelf: "flex-end",
+    paddingVertical: 6,
+    paddingHorizontal: 18,
+  },
+  "btn-container": {
+    ...tw`mt-2 ml-3 rounded-full`,
+  },
   "btn-container-small": {
     // mt-6   py-2 border-t border-gray-300
     marginTop: 24,
@@ -31,11 +38,7 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
     paddingBottom: 25,
     paddingHorizontal: 28,
   },
-  "btn-small": {
-    alignSelf: "flex-end",
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-  },
+
   "btn-text": {
     fontWeight: "600",
     fontSize: 20,

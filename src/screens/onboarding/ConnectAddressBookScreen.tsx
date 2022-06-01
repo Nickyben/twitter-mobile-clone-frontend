@@ -18,52 +18,15 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "./../../hooks/useColorScheme";
 
-type Props = OnboardingStackScreenProps<"ProfilePicture"> & {
+type Props = OnboardingStackScreenProps<"ConnectAddressBook"> & {
   prop1: string;
-};
-type ExperienceSetting = {
-  title: string;
-  description: string;
-  value: boolean;
 };
 
 const ConnectAddressBookScreen = ({ navigation }: Props) => {
-  const [profileImage, setProfileImage] = useState<never>();
-  const colorScheme = useColorScheme();
   const headerHeight = useHeaderHeight();
-  const initialExperienceSetting: Array<ExperienceSetting> = [
-    {
-      title: "Get more out of Twitter",
-      description: "Receive email about your activity and Twitter recommendations",
-      value: false,
-    },
-    {
-      title: "Connect with people you know",
-      description: "Let others find you twitter account by you email address",
-      value: false,
-    },
-  ];
-  const [experienceSetting, setExperienceSetting] = useState<
-    Array<ExperienceSetting>
-  >(initialExperienceSetting);
 
   const handleValidSubmit = useCallback(() => {
-    navigation.navigate("Bio");
-  }, []);
-
-  const changeSetting = useCallback((value, description) => {
-    setExperienceSetting((prev) => {
-      const updatedSetting = prev.map((s) => {
-        if (s.description === description) {
-          return {
-            ...s,
-            value,
-          };
-        }
-        return s;
-      });
-      return updatedSetting;
-    });
+    navigation.navigate("Languages");
   }, []);
 
   return (
@@ -97,9 +60,7 @@ const ConnectAddressBookScreen = ({ navigation }: Props) => {
         buttonStyle={tw`btn `}
         containerStyle={tw`btn-container-big`}
         titleStyle={tw`btn-text`}
-        onPress={() => {
-          return;
-        }}
+        onPress={() => Alert.alert("Not yet available")}
       />
       <Text
         style={tw`mb-4 -mt-2 text-primary text-center`}

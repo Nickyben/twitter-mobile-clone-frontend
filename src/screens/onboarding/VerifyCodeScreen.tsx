@@ -48,7 +48,7 @@ const CELL_COUNT = 6;
 const VerifyCodeScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
   const [value, setValue] = useState("");
-  const [inputIsValid, setInputIsValid] = useState<boolean>(false);
+  const [inputIsValid, setInputIsValid] = useState<boolean>(true);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
@@ -59,7 +59,7 @@ const VerifyCodeScreen = ({ navigation }: Props) => {
     if (!inputIsValid) {
       return;
     }
-    Alert.alert(JSON.stringify(Number(value)));
+    // Alert.alert(JSON.stringify(Number(value)));
     navigation.navigate("Password", { verificationCode: Number(value) });
   }, [inputIsValid]);
 

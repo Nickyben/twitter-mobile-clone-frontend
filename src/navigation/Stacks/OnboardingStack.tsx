@@ -17,6 +17,8 @@ import ConnectAddressBookScreen from "../../screens/onboarding/ConnectAddressBoo
 import CreateAccountScreen from "../../screens/onboarding/CreateAccountScreen";
 import CustomizeExpScreen from "../../screens/onboarding/CustomizeExpScreen";
 import GetStartedScreen from "../../screens/onboarding/GetStartedScreen";
+import InterestedInScreen from "../../screens/onboarding/InterestedInScreen";
+import LanguagesScreen from "../../screens/onboarding/LanguagesScreen";
 import PasswordScreen from "../../screens/onboarding/PasswordScreen";
 import ProfilePictureScreen from "../../screens/onboarding/ProfilePictureScreen";
 import UsernameScreen from "../../screens/onboarding/UserNameScreen";
@@ -66,6 +68,8 @@ export function OnboardingStackNavigator() {
         component={ProfilePictureScreen}
         options={{}}
       />
+      <Stack.Screen name="Bio" component={BioScreen} options={{}} />
+
       <Stack.Screen
         name="CustomizeExperience"
         component={CustomizeExpScreen}
@@ -76,7 +80,12 @@ export function OnboardingStackNavigator() {
         component={ConnectAddressBookScreen}
         options={{}}
       />
-      <Stack.Screen name="Bio" component={BioScreen} options={{}} />
+      <Stack.Screen name="Languages" component={LanguagesScreen} options={{}} />
+      <Stack.Screen
+        name="InterestedIn"
+        component={InterestedInScreen}
+        options={{}}
+      />
       <Stack.Screen name="Notfound" component={FakeComponent} options={{}} />
       {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="VerifyCode" component={ModalScreen} options={{}} />

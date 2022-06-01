@@ -71,6 +71,7 @@ export type OnboardingStackParamList = Extras & {
   InterestedIn: undefined;
   Suggestions: undefined;
   TurnOnNotifications: undefined;
+  SuggestedFollows: undefined;
 };
 
 export type OnboardingStackScreenProps<
