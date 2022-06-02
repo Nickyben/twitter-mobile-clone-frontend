@@ -2,27 +2,26 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   SafeAreaView,
-  View,
   FlatList,
   StyleSheet,
-  Text,
   StatusBar,
   ScrollView,
 } from "react-native";
 import { Button } from "react-native-elements";
+import { Text, View } from "../src/components/Themed";
 import Colors, { tintColorDark, tintColorPrimary } from "../src/constants/Colors";
 import { InterestCategories, InterestItem } from "../src/data/onboarding";
 import tw from "../src/styles/tailwind/tailwind";
 interface IProps {
   interestCat: InterestCategories;
   selectedInterests: Array<string>;
-  selectInterest?: (interest: string) => void;
+  selectInterest?: (id: string) => void;
 }
 interface ListItemType extends InterestItem {
-  selectInterest?: (interest: string) => void;
+  selectInterest?: (id: string) => void;
 }
 
-const ListItem = ({ interest, isSelected, selectInterest }: ListItemType) => {
+const ListItem = ({ interest, isSelected, selectInterest, id }: ListItemType) => {
   // const [isSelected, setIsSelected] = useState(_isSelected);
   return (
     <View style={tw``}>
@@ -45,7 +44,7 @@ const ListItem = ({ interest, isSelected, selectInterest }: ListItemType) => {
           />
         }
         iconRight
-        onPress={() => selectInterest(interest)}
+        onPress={() => selectInterest(id)}
       />
     </View>
   );
@@ -71,6 +70,7 @@ const InterestsSelectionList = ({
 
       return (
         <MemoListItem
+          id={item.id}
           selectInterest={selectInterest}
           interest={item.interest}
           isSelected={item.isSelected || isSelected}
@@ -96,7 +96,7 @@ const InterestsSelectionList = ({
           numColumns={Math.ceil(list.length / 5)}
           // ListHeaderComponent={<ListHeader title={title} />}
           keyExtractor={(item) => item.interest}
-          // extraData={[selectedInterests, selectInterest]}
+          extraData={[selectedInterests, selectInterest]}
         />
       </ScrollView>
     </SafeAreaView>

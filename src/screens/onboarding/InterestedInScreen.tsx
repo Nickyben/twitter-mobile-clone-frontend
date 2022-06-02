@@ -1,14 +1,11 @@
 import tw from "../../styles/tailwind/tailwind";
 import React, { Fragment, useCallback, useState } from "react";
-import { Text, View } from "../../components/Themed";
-import { Formik } from "formik";
-import { Alert, KeyboardAvoidingView, ScrollView, TextInput } from "react-native";
-import { Avatar, Button } from "react-native-elements";
+import { View } from "../../components/Themed";
+import { ScrollView } from "react-native";
+import { Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
 import OnboardHeadTexts from "../../components/onboarding/OnboardHeadTexts";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { PasswordValidationSchema } from "../../validation/onboarding";
-import { Ionicons } from "@expo/vector-icons";
 import InterestsSelectionList from "../../../components/InterestsSelectionList";
 import { initialInterestCategoriesData } from "../../data/onboarding";
 
@@ -20,19 +17,19 @@ const InterestedInScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
   const [selectedInterests, setSelectedInterests] = useState<Array<string>>([]);
 
-  const selectInterest = useCallback((interest) => {
+  const selectInterest = useCallback((id) => {
     setSelectedInterests((prev) => {
-      if (prev.some((i) => i === interest)) {
-        return prev.filter((i) => i !== interest);
+      if (prev.some((i) => i === id)) {
+        return prev.filter((i) => i !== id);
       }
-      return prev.concat(interest);
+      return prev.concat(id);
     });
   }, []);
 
   const handleNext = useCallback(() => {
     console.log({ selectedInterests });
 
-    navigation.navigate("Bio");
+    navigation.navigate("Suggestions");
   }, [selectedInterests]);
 
   return (

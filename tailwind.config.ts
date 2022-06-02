@@ -41,7 +41,7 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
 
   "btn-text": {
     fontWeight: "600",
-    fontSize: 20,
+    fontSize: 18,
   },
   "resize-repeat": {
     resizeMode: `repeat`,

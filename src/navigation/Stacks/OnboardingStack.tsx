@@ -21,6 +21,7 @@ import InterestedInScreen from "../../screens/onboarding/InterestedInScreen";
 import LanguagesScreen from "../../screens/onboarding/LanguagesScreen";
 import PasswordScreen from "../../screens/onboarding/PasswordScreen";
 import ProfilePictureScreen from "../../screens/onboarding/ProfilePictureScreen";
+import SuggestionsScreen from "../../screens/onboarding/SuggestionsScreen";
 import UsernameScreen from "../../screens/onboarding/UserNameScreen";
 import VerifyCodeScreen from "../../screens/onboarding/VerifyCodeScreen";
 
@@ -54,6 +55,8 @@ export function OnboardingStackNavigator() {
           />
         ),
       }}>
+      <Stack.Screen name="Suggestions" component={SuggestionsScreen} options={{}} />
+
       <Stack.Screen name="GetStarted" component={GetStartedScreen} options={{}} />
       <Stack.Screen name="Username" component={UsernameScreen} options={{}} />
       <Stack.Screen
@@ -86,6 +89,7 @@ export function OnboardingStackNavigator() {
         component={InterestedInScreen}
         options={{}}
       />
+      {/* <Stack.Screen name="Suggestions" component={SuggestionsScreen} options={{}} /> */}
       <Stack.Screen name="Notfound" component={FakeComponent} options={{}} />
       {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="VerifyCode" component={ModalScreen} options={{}} />

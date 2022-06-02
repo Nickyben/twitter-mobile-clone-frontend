@@ -1,22 +1,11 @@
 import tw from "../../styles/tailwind/tailwind";
 import React, { Fragment, useCallback, useState } from "react";
 import { Text, View } from "../../components/Themed";
-import { Formik } from "formik";
-import {
-  Alert,
-  KeyboardAvoidingView,
-  ScrollView,
-  Switch,
-  TextInput,
-} from "react-native";
+import { Alert, ScrollView } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
 import OnboardHeadTexts from "../../components/onboarding/OnboardHeadTexts";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { PasswordValidationSchema } from "../../validation/onboarding";
-import { Ionicons } from "@expo/vector-icons";
-import Colors from "../../constants/Colors";
-import useColorScheme from "./../../hooks/useColorScheme";
 
 type Props = OnboardingStackScreenProps<"ConnectAddressBook"> & {
   prop1: string;
