@@ -9,55 +9,44 @@ import {
   DefaultTheme,
   DarkTheme,
 } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
 
-import ModalScreen from "../screens/ModalScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import { RootStackParamList } from "./types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { BottomTabNavigator } from "./Tabs/BottomTab";
 import { OnboardingStackNavigator } from "./Stacks/OnboardingStack";
 import { TwitterTheme } from "../constants/TwitterTheme";
+import { RootDrawerNavigator } from "./Drawer/RootDrawer";
+import { updateNavState } from "../redux/actions/navigation";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { AuthStatus } from "../redux/enums";
 
-export default function Navigation({
-  colorScheme,
-}: {
+
+interface IProps {
   colorScheme: ColorSchemeName;
-}) {
+ 
+}
+export default function Navigation({ colorScheme, }: IProps) {
+  const appNavState = useAppSelector((state) => state.navReducer.appNavState);
+  const authStatus = useAppSelector((state) => state.authReducer.status);
+  const dispatch = useAppDispatch();
+  const [isReady, setIsReady] = React.useState(false);
+
+  const handleChangedState = React.useCallback((state) => {
+    dispatch(updateNavState(state));
+  }, []);
+
   return (
     <NavigationContainer
+      onReady={() => 0}
+      initialState={appNavState}
+      onStateChange={handleChangedState}
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : TwitterTheme}>
-      <OnboardingStackNavigator />
-      {/* <RootNavigator /> */}
+      {[AuthStatus.IDLE, AuthStatus.ONBOARDING].some((s) => s === authStatus) ? (
+        <OnboardingStackNavigator />
+      ) : (
+        <RootDrawerNavigator />
+      )}
     </NavigationContainer>
-  );
-}
-
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-function RootNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
   );
 }

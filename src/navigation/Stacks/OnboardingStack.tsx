@@ -11,6 +11,7 @@ import * as React from "react";
 import { ColorSchemeName, Image, Pressable } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
+import LoginScreen from "../../screens/auth/LoginScreen";
 import ModalScreen from "../../screens/ModalScreen";
 import BioScreen from "../../screens/onboarding/BioScreen";
 import ConnectAddressBookScreen from "../../screens/onboarding/ConnectAddressBookScreen";
@@ -22,6 +23,7 @@ import LanguagesScreen from "../../screens/onboarding/LanguagesScreen";
 import PasswordScreen from "../../screens/onboarding/PasswordScreen";
 import ProfilePictureScreen from "../../screens/onboarding/ProfilePictureScreen";
 import SuggestionsScreen from "../../screens/onboarding/SuggestionsScreen";
+import TurnOnNotificationsScreen from "../../screens/onboarding/TurnOnNotificationsScreen";
 import UsernameScreen from "../../screens/onboarding/UserNameScreen";
 import VerifyCodeScreen from "../../screens/onboarding/VerifyCodeScreen";
 
@@ -34,7 +36,7 @@ const FakeComponent = () => {
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
-const Stack = createNativeStackNavigator<OnboardingStackParamList>();
+const Stack = createNativeStackNavigator<OnboardingStackParamList>(); 
 
 export function OnboardingStackNavigator() {
   const colorScheme = useColorScheme();
@@ -42,7 +44,6 @@ export function OnboardingStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true,
         headerTitleAlign: "center",
         headerTransparent: true,
         headerTintColor: Colors[colorScheme].primary,
@@ -55,8 +56,6 @@ export function OnboardingStackNavigator() {
           />
         ),
       }}>
-      <Stack.Screen name="Suggestions" component={SuggestionsScreen} options={{}} />
-
       <Stack.Screen name="GetStarted" component={GetStartedScreen} options={{}} />
       <Stack.Screen name="Username" component={UsernameScreen} options={{}} />
       <Stack.Screen
@@ -89,7 +88,18 @@ export function OnboardingStackNavigator() {
         component={InterestedInScreen}
         options={{}}
       />
-      {/* <Stack.Screen name="Suggestions" component={SuggestionsScreen} options={{}} /> */}
+      <Stack.Screen name="Suggestions" component={SuggestionsScreen} options={{}} />
+      <Stack.Screen
+        name="TurnOnNotifications"
+        component={TurnOnNotificationsScreen}
+        options={{}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{}}
+      />
+
       <Stack.Screen name="Notfound" component={FakeComponent} options={{}} />
       {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="VerifyCode" component={ModalScreen} options={{}} />

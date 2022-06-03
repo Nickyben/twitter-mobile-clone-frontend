@@ -3,7 +3,10 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabNavigationProp,
+  BottomTabScreenProps,
+} from "@react-navigation/bottom-tabs";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import {
   CompositeScreenProps,
@@ -44,6 +47,10 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+export type RootTabNavigationProp = BottomTabNavigationProp<
+  RootTabParamList,
+  keyof RootTabParamList
+>;
 
 //=========================================================================================================
 //=========================================================================================================
@@ -55,7 +62,7 @@ export type Extras = {
   Notfound: undefined;
 };
 //=========================================================================================================
-//=========================================  ONBOARDING  ==================================================
+//==============================  ONBOARDING & AUTHENTICATION =============================================
 //=========================================================================================================
 export type OnboardingStackParamList = Extras & {
   GetStarted: undefined;
@@ -72,6 +79,7 @@ export type OnboardingStackParamList = Extras & {
   Suggestions: undefined;
   TurnOnNotifications: undefined;
   SuggestedFollows: undefined;
+  Login: undefined;
 };
 
 export type OnboardingStackScreenProps<
@@ -114,7 +122,7 @@ export type RootDrawerScreenProps<Screen extends keyof RootDrawerParamList> =
 //=========================================================================================================
 //=========================================  MAIN STACK  ==================================================
 //=========================================================================================================
-export type MainStackParamList = {
+export type MainStackParamList = Extras & {
   MainTab: NavigatorScreenParams<BottomTabParamList> | undefined;
   TweetDetail: undefined;
   CommentAction: undefined;

@@ -10,7 +10,7 @@ type Props = {
 export default function ({ title, description }: Props) {
   return (
     <View style={tw`w-full `}>
-      <Text style={tw.style(`text-[28px] font-bold  text-center`)}>{title}</Text>
+      <Text style={tw.style(`text-[26px] font-bold  text-center`)}>{title}</Text>
       {Boolean(description) && (
         <Text
           style={tw.style(

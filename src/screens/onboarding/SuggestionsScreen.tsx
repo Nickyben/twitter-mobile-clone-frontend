@@ -34,7 +34,7 @@ const SuggestionsScreen = ({ navigation }: Props) => {
   const handleNext = useCallback(() => {
     console.log({ followedUserIds });
 
-    // navigation.navigate("InterestedIn");
+    navigation.navigate("TurnOnNotifications");
   }, [followedUserIds]);
 
   return (

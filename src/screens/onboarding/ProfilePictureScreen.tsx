@@ -2,7 +2,7 @@ import tw from "../../styles/tailwind/tailwind";
 import React, { Fragment, useCallback, useState } from "react";
 import { Text, View } from "../../components/Themed";
 import { Formik } from "formik";
-import { Alert, KeyboardAvoidingView, ScrollView, TextInput } from "react-native";
+import { Alert, ScrollView,  } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
 import OnboardHeadTexts from "../../components/onboarding/OnboardHeadTexts";

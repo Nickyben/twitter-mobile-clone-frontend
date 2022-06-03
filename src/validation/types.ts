@@ -3,3 +3,8 @@ export type CreateAccountInputs = {
   phoneOrEmail: string;
   dateOfBirth: string;
 };
+
+export type LoginInputs = {
+  phoneOrEmailOrUsername: string;
+  password: string;
+};

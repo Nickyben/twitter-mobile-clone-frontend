@@ -17,7 +17,7 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
   },
   "btn-small": {
     alignSelf: "flex-end",
-    paddingVertical: 6,
+    paddingVertical: 5,
     paddingHorizontal: 18,
   },
   "btn-container": {
@@ -26,17 +26,17 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
   "btn-container-small": {
     // mt-6   py-2 border-t border-gray-300
     marginTop: 24,
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderTopWidth: 1,
     borderColor: tw`border-gray-300`.borderColor as ColorValue,
-    paddingHorizontal: 12,
+    paddingHorizontal: 20,
   },
   "btn-container-big": {
     // mt-6   py-2 border-t border-gray-300
     marginTop: 24,
-    paddingVertical: 15,
+    paddingVertical: 14,
     paddingBottom: 25,
-    paddingHorizontal: 28,
+    paddingHorizontal: 26,
   },
 
   "btn-text": {

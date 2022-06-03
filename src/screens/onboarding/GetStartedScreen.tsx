@@ -1,9 +1,12 @@
 import tw from "../../styles/tailwind/tailwind";
-import React from "react";
+import React, { useCallback } from "react";
 import { Text, View } from "../../components/Themed";
 import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
+import { useAppDispatch } from "../../hooks/redux";
+import { fakeLogin } from "../../redux/actions/auth/login";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 // ...
 
@@ -12,23 +15,35 @@ type Props = OnboardingStackScreenProps<"GetStarted"> & {
 };
 
 const GetStartedScreen = ({ navigation }: Props) => {
+  const headerHeight = useHeaderHeight();
+  const dispatch = useAppDispatch();
+  const handleLogin = useCallback(() => {
+    navigation.navigate('Login')
+  },[navigation.navigate])
+
   return (
-    <ScrollView
-      style={tw` p-7`}
-      contentContainerStyle={tw`flex items-center justify-center min-h-full `}>
-      <View style={tw`w-full `}>
-        <Text style={tw.style(`text-3xl font-bold  text-justify`)}>
-          See what's happening in the world right now.
+    <>
+      <ScrollView style={tw` p-7 `} contentContainerStyle={tw`my-auto`}>
+        <View style={tw`w-full  mt-[${headerHeight}px] pt-7  self-center`}>
+          <Text style={tw.style(`text-3xl font-bold text-justify`)}>
+            See what's happening in the world right now.
+          </Text>
+          <Button
+            title="Get Started"
+            buttonStyle={tw`btn`}
+            containerStyle={tw`mt-6`}
+            titleStyle={tw`btn-text`}
+            onPress={() => dispatch(fakeLogin())} //navigation.navigate("Username")}
+          />
+        </View>
+      </ScrollView>
+      <Text style={tw`text-[16px] font-semibold text-gray-500  my-6 ml-7 `}>
+        Have an account already?{" "}
+        <Text style={tw`text-[16px] font-bold text-primary  `} onPress={handleLogin}>
+          Login
         </Text>
-        <Button
-          title="Get Started"
-          buttonStyle={tw`btn`}
-          containerStyle={tw`mt-6`}
-          titleStyle={tw`btn-text`}
-          onPress={() => navigation.navigate("Username")}
-        />
-      </View>
-    </ScrollView>
+      </Text>
+    </>
   );
 };
 

@@ -43,6 +43,7 @@ const UsernameScreen = ({ navigation }: Props) => {
         return (
           <>
             <ScrollView
+              keyboardShouldPersistTaps={"handled"}
               style={tw` p-7 py-0 `}
               contentContainerStyle={tw` items-center   `}>
               <View style={tw`w-full   mt-[${headerHeight}px] pt-5`}>
@@ -53,7 +54,7 @@ const UsernameScreen = ({ navigation }: Props) => {
                 <KeyboardAvoidingView>
                   <TextInput
                     textContentType="username"
-                    value={values.username}
+                    value={"@" + values.username.replace("@", "")}
                     style={tw`text-input-primary`}
                     onChangeText={handleChange("username")}
                     onBlur={() => setFieldTouched("username")}

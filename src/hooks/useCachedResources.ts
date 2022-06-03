@@ -1,12 +1,15 @@
 import { FontAwesome } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
   // Load any resources or data that we need prior to rendering the app
+  const setPersistorIsReady = useCallback((persistorIsReady: boolean) => {
+    setLoadingComplete(() => persistorIsReady);
+  }, []);
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
@@ -29,5 +32,7 @@ export default function useCachedResources() {
     loadResourcesAndDataAsync();
   }, []);
 
-  return isLoadingComplete;
+
+
+  return { isLoadingComplete, setPersistorIsReady };
 }

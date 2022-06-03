@@ -4,7 +4,8 @@
  *
  */
 import { FontAwesome, Fontisto, Ionicons, Octicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { DrawerActions, NavigationProp } from "@react-navigation/native";
 
 import * as React from "react";
 import { Image, Pressable } from "react-native";
@@ -17,7 +18,7 @@ import NotificationsScreen from "../../screens/notifications/NotificationsScreen
 import SearchScreen from "../../screens/search/SearchScreen";
 import SpacesScreen from "../../screens/spaces/SpacesScreen";
 
-import { RootTabParamList, RootTabScreenProps } from "../types";
+import {  RootTabNavigationProp, RootTabParamList, RootTabScreenProps } from "../types";
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -25,16 +26,31 @@ import { RootTabParamList, RootTabScreenProps } from "../types";
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
+
 export function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      screenOptions={{
+      screenOptions={({navigation}) => ({
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
+        headerLeft: () => (
+          <Pressable
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.5 : 1,
+            })}>
+            <Ionicons
+              name="ios-menu"
+              size={25}
+              color={Colors[colorScheme].text}
+              style={{ marginLeft: 15 }}
+            />
+          </Pressable>
+        ),
+      })}>
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
@@ -43,6 +59,7 @@ export function BottomTabNavigator() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="home" color={color} focused={focused} />
           ),
+
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate("Modal")}

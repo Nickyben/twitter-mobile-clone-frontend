@@ -43,6 +43,7 @@ const PasswordScreen = ({ navigation }: Props) => {
         return (
           <>
             <ScrollView
+              keyboardShouldPersistTaps={"handled"}
               style={tw` p-7 py-0 `}
               contentContainerStyle={tw` items-center   `}>
               <View style={tw`w-full   mt-[${headerHeight}px] pt-5`}>

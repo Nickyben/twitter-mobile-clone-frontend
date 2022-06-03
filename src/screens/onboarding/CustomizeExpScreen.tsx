@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Switch,
-  TextInput,
 } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
