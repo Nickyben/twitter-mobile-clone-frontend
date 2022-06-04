@@ -1,9 +1,13 @@
 // lib/tailwind.js
-import { create } from "twrnc";
+import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { create  } from "twrnc";
 
+
+type TailwindReturn=(...any)=> ViewStyle | TextStyle | ImageStyle;
 // create the customized version...
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const tw = create(require(`../../../tailwind.config`)); // <- your path may differ
+const tw: TailwindReturn = create(require(`../../../tailwind.config`));   // <- your path may differ
+
 
 // ... and then this becomes the main function your app uses
-export default tw;
+export default tw //as 

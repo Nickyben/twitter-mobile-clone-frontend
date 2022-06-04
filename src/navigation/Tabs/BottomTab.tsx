@@ -9,6 +9,7 @@ import { DrawerActions, NavigationProp } from "@react-navigation/native";
 
 import * as React from "react";
 import { Image, Pressable } from "react-native";
+import { Avatar } from "react-native-elements";
 import SvgIcon from "../../components/icons/svg/TabIcons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
@@ -17,6 +18,7 @@ import MessagesScreen from "../../screens/messages/MessagesScreen";
 import NotificationsScreen from "../../screens/notifications/NotificationsScreen";
 import SearchScreen from "../../screens/search/SearchScreen";
 import SpacesScreen from "../../screens/spaces/SpacesScreen";
+import tw from "../../styles/tailwind/tailwind";
 
 import {  RootTabNavigationProp, RootTabParamList, RootTabScreenProps } from "../types";
 
@@ -24,29 +26,37 @@ import {  RootTabNavigationProp, RootTabParamList, RootTabScreenProps } from "..
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
+
+interface IProps{
+  avatar: string
+}
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-
-export function BottomTabNavigator() {
+//TODO: CALL USE_SELECTOR FOR THE AVATAR
+export function BottomTabNavigator({avatar}:IProps) {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      screenOptions={({navigation}) => ({
+      screenOptions={({
+        navigation,
+      }: RootTabScreenProps<keyof RootTabParamList>) => ({
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerLeft: () => (
           <Pressable
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             style={({ pressed }) => ({
               opacity: pressed ? 0.5 : 1,
             })}>
-            <Ionicons
-              name="ios-menu"
-              size={25}
-              color={Colors[colorScheme].text}
-              style={{ marginLeft: 15 }}
+            <Avatar
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+              size={"small"}
+              rounded
+              containerStyle={tw`ml-4`}
+              source={
+                avatar ? { uri: avatar } : require("../../../assets/images/user.png")
+              }
             />
           </Pressable>
         ),
@@ -150,15 +160,7 @@ function TabBarIcon({
       />
     );
   }
-  // if (name === "spaces") {
-  //   return (
-  //     <Ionicons
-  //       name={focused ? "mic" : "mic-outline"}
-  //       size={35}
-  //       color={focused ? Colors[colorScheme].primary : Colors[colorScheme].dark}
-  //     />
-  //   );
-  // }
+
 
   if (name === "search") {
     return (

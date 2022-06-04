@@ -51,7 +51,7 @@ const ListItem = ({ interest, isSelected, selectInterest, id }: ListItemType) =>
 };
 const ListHeader = ({ title }) => (
   <View
-    style={tw`w-full  px-7  py-3 bg-white w-full border-t border-b border-gray-300`}>
+    style={tw`w-full  px-7  py-3 bg-white w-full border-t  border-b-1 border-gray-300`}>
     <Text style={tw`text-[22px] font-bold   `}>{title}</Text>
   </View>
 );

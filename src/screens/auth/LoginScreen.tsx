@@ -13,8 +13,13 @@ import { Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
 import OnboardHeadTexts from "../../components/onboarding/OnboardHeadTexts";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { CreateAccountValidationSchema, LoginValidationSchema } from "../../validation/onboarding";
+import {
+  CreateAccountValidationSchema,
+  LoginValidationSchema,
+} from "../../validation/onboarding";
 import { LoginInputs } from "../../validation/types";
+import { useAppDispatch } from "../../hooks/redux";
+import { fakeLogin } from "../../redux/actions/auth/login";
 
 type Props = OnboardingStackScreenProps<"Login"> & {
   prop1: string;
@@ -27,10 +32,11 @@ const placeholders: LoginInputs = {
 
 const LoginScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
+    const dispatch = useAppDispatch();
   const handleValidSubmit = useCallback((values: LoginInputs) => {
     // const { name, phoneOrEmail, dateOfBirth } = values || {};
-    // Alert.alert(JSON.stringify(values));
-    //navigation.navigate("VerifyCode");
+    //Alert.alert(JSON.stringify(values));
+    dispatch(fakeLogin());
   }, []);
 
   const initialValues: LoginInputs = {
@@ -55,7 +61,7 @@ const LoginScreen = ({ navigation }: Props) => {
         return (
           <>
             <ScrollView
-              keyboardShouldPersistTaps={'handled'}
+              keyboardShouldPersistTaps={"handled"}
               style={tw` p-7 py-0 `}
               contentContainerStyle={tw` items-center `}>
               <View style={tw`w-full   mt-[${headerHeight}px] pt-5`}>

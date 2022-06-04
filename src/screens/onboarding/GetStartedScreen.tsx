@@ -4,8 +4,6 @@ import { Text, View } from "../../components/Themed";
 import { ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
-import { useAppDispatch } from "../../hooks/redux";
-import { fakeLogin } from "../../redux/actions/auth/login";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 // ...
@@ -16,10 +14,9 @@ type Props = OnboardingStackScreenProps<"GetStarted"> & {
 
 const GetStartedScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
-  const dispatch = useAppDispatch();
   const handleLogin = useCallback(() => {
-    navigation.navigate('Login')
-  },[navigation.navigate])
+    navigation.navigate("Login");
+  }, [navigation.navigate]);
 
   return (
     <>
@@ -33,7 +30,7 @@ const GetStartedScreen = ({ navigation }: Props) => {
             buttonStyle={tw`btn`}
             containerStyle={tw`mt-6`}
             titleStyle={tw`btn-text`}
-            onPress={() => dispatch(fakeLogin())} //navigation.navigate("Username")}
+            onPress={() => navigation.navigate("Username")}
           />
         </View>
       </ScrollView>

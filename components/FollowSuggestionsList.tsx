@@ -30,7 +30,7 @@ const ListHeader = () => {
         />
       </View>
       <View
-        style={tw`w-full  px-5  py-3 bg-white w-full border-t border-b border-gray-200`}>
+        style={tw`w-full  px-5  py-3 bg-white w-full border-t border-b-1 border-gray-200`}>
         <Text style={tw`text-[20px] font-bold  text-left `}>
           You may be interested in
         </Text>

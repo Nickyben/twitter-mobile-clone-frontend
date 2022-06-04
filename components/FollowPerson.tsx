@@ -31,7 +31,7 @@ const FollowerPerson = ({
 
   return (
     <View
-      style={tw`p-5 py-2 flex-row flex-1 border-b border-gray-200  items-center`}>
+      style={tw`p-5 py-2 flex-row flex-1 border-b-1 border-gray-200  items-center`}>
       <Avatar
         size={55}
         rounded

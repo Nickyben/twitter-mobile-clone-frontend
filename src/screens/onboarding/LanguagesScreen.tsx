@@ -88,7 +88,7 @@ const LanguagesScreen = ({ navigation }: Props) => {
             return (
               <View
                 key={title}
-                style={tw`w-full  flex-row   items-start border-b border-gray-200 mt-3 px-7 py-2`}>
+                style={tw`w-full  flex-row   items-start  border-b-1 border-gray-200 mt-3 px-7 py-2`}>
                 <Text style={tw`text-[18px] font-bold text-gray-600 flex-1  `}>
                   {title}
                 </Text>
