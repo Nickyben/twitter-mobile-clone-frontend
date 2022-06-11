@@ -4,7 +4,7 @@ import { Button } from "react-native-elements";
 
 import { Text, View } from "../../components/Themed";
 import { useAppDispatch } from "../../hooks/redux";
-import { fakeLogout } from "../../redux/actions/auth/login";
+import { fakeLogout } from "../../redux/actions/auth/loginAction";
 import tw from "../../styles/tailwind/tailwind";
 
 export default function HomeScreen() {

@@ -2,6 +2,8 @@ import tw from "../../styles/tailwind/tailwind";
 import React, { useCallback, Fragment } from "react";
 import { Text, View } from "../../components/Themed";
 import { Formik } from "formik";
+import ErrorBoundary from "react-native-error-boundary";
+import Toast from "react-native-toast-message";
 import {
   Alert,
   Keyboard,
@@ -19,7 +21,9 @@ import {
 } from "../../validation/onboarding";
 import { LoginInputs } from "../../validation/types";
 import { useAppDispatch } from "../../hooks/redux";
-import { fakeLogin } from "../../redux/actions/auth/login";
+import { loginAction } from "../../redux/actions/auth/loginAction";
+import { useFetch } from "../../hooks/useFetch";
+import { useProcessAsync } from "../../hooks/useProcessAsync";
 
 type Props = OnboardingStackScreenProps<"Login"> & {
   prop1: string;
@@ -32,20 +36,26 @@ const placeholders: LoginInputs = {
 
 const LoginScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const {isLoading,error, isSuccessful, result,processAsync } =  useProcessAsync()
   const handleValidSubmit = useCallback((values: LoginInputs) => {
-    // const { name, phoneOrEmail, dateOfBirth } = values || {};
-    //Alert.alert(JSON.stringify(values));
-    dispatch(fakeLogin());
+    return processAsync(() => dispatch(loginAction(values)));
+    Toast.show({
+      visibilityTime: 3000,
+      type: "info",
+      text1: "Hello",
+      text2: "This is some something 👋",
+    });
   }, []);
 
   const initialValues: LoginInputs = {
     phoneOrEmailOrUsername: "",
     password: "",
   };
-
+ 
   return (
     <Formik
+      
       initialValues={initialValues}
       validationSchema={LoginValidationSchema}
       onSubmit={handleValidSubmit}>

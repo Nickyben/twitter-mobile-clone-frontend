@@ -55,7 +55,7 @@ export const BioValidationSchema = yup.object().shape({
 export const LoginValidationSchema = yup.object().shape({
   phoneOrEmailOrUsername: yup
     .string()
-    .required("Please, provide your phone number or email address or username!")
+    // .required("Please, provide your phone number or email address or username!")
     .test(
       "phoneOrEmailOrUsername",
       "Must be a valid phone number or email address. Username must contain only alphanumeric or underscore characters  with no spaces",
@@ -77,7 +77,7 @@ export const LoginValidationSchema = yup.object().shape({
 
   password: yup
     .string()
-    .required("Please, provide your password!")
+    // .required("Please, provide your password!")
     .min(8, "Your password cannot be less than 8 characters long!")
     .max(15, "Your password cannot exceed 15 characters!")
     .matches(

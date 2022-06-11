@@ -11,6 +11,16 @@ import useColorScheme from "../../hooks/useColorScheme";
 import tw from "../../styles/tailwind/tailwind";
 import CustomDrawerHeader from "./DrawerHeader";
 
+const getLabel = (routeName: string) => {
+  return routeName.split("").map((char) => {
+    if (char.toUpperCase() === char) {
+      return " " + char;
+    }
+    return char;
+  }).join('');
+  
+};
+
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { navigation, state, descriptors } = props || {};
   // console.log({
@@ -32,9 +42,8 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
               <DrawerItem
                 // isFocused={state.history[state.history.length-1].key}
                 icon={(props) => <DrawerItemIcon {...props} />}
-                activeBackgroundColor="#ff0"
                 key={index}
-                label={routeName}
+                label={getLabel(routeName)}
                 onPress={() => navigation.navigate(routeName)}
                 labelStyle={tw` -ml-2  text-md  text-gray-800 font-normal`}
                 style={tw` mx-0  p-0 pl-0`}

@@ -56,7 +56,7 @@ export const RootDrawerNavigator = () => {
       <Drawer.Screen
         name="TwitterForProfessionals"
         component={ModalScreen}
-        options={{ drawerItemStyle: tw`` }}
+        options={{ drawerItemStyle: tw``, }}
       />
       <Drawer.Screen
         name="TwitterAds"

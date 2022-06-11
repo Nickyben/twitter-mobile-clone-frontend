@@ -22,7 +22,7 @@ const GetStartedScreen = ({ navigation }: Props) => {
     <>
       <ScrollView style={tw` p-7 `} contentContainerStyle={tw`my-auto`}>
         <View style={tw`w-full  mt-[${headerHeight}px] pt-7  self-center`}>
-          <Text style={tw.style(`text-3xl font-bold text-justify`)}>
+          <Text style={tw`text-3xl font-bold text-justify`}>
             See what's happening in the world right now.
           </Text>
           <Button

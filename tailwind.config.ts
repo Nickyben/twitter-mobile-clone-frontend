@@ -1,8 +1,8 @@
-import { plugin } from "twrnc";
-import { tintColorPrimary } from "./src/constants/Colors";
-import tw from "twrnc";
+import tw, { plugin } from "twrnc";
+import { lightPrimary, tintColorPrimary } from "./src/constants/Colors";
 import { ColorValue, ImageStyle, TextStyle, ViewStyle } from "react-native";
 import { AddedUtilities } from "twrnc/dist/esm/types";
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line no-undef
 const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
@@ -59,6 +59,12 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
   "text-md": {
     fontSize: 16,
   },
+  "toast-style": {
+    borderLeftWidth: 1 / 2,
+    borderWidth: 1 / 2,
+    borderColor: tintColorPrimary,
+    ...tw`w-14/15    h-17`,
+  },
   "profile-add-icon": {
     ...tw`bg-white absolute absolute -bottom-3 
             right-0 rounded-full p-5 text-center
@@ -91,6 +97,7 @@ module.exports = {
       },
       colors: {
         primary: tintColorPrimary,
+        lightPrimary: lightPrimary,
         disabled: "#ff0",
         "gray-black": "#010101",
         "grey-black": "#010101",
