@@ -16,13 +16,11 @@ import { OnboardingStackScreenProps } from "../../navigation/types";
 import OnboardHeadTexts from "../../components/onboarding/OnboardHeadTexts";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {
-  CreateAccountValidationSchema,
   LoginValidationSchema,
 } from "../../validation/onboarding";
 import { LoginInputs } from "../../validation/types";
 import { useAppDispatch } from "../../hooks/redux";
 import { loginAction } from "../../redux/actions/auth/loginAction";
-import { useFetch } from "../../hooks/useFetch";
 import { useProcessAsync } from "../../hooks/useProcessAsync";
 
 type Props = OnboardingStackScreenProps<"Login"> & {
@@ -37,25 +35,19 @@ const placeholders: LoginInputs = {
 const LoginScreen = ({ navigation }: Props) => {
   const headerHeight = useHeaderHeight();
   const dispatch = useAppDispatch();
-  const {isLoading,error, isSuccessful, result,processAsync } =  useProcessAsync()
+  const { isLoading, error, isSuccessful, result, processAsync } = useProcessAsync();
   const handleValidSubmit = useCallback((values: LoginInputs) => {
-    return processAsync(() => dispatch(loginAction(values)));
-    Toast.show({
-      visibilityTime: 3000,
-      type: "info",
-      text1: "Hello",
-      text2: "This is some something 👋",
-    });
+    return processAsync(() => dispatch(loginAction(values)));   
   }, []);
 
   const initialValues: LoginInputs = {
     phoneOrEmailOrUsername: "",
     password: "",
   };
- 
+  console.log({error})
+
   return (
     <Formik
-      
       initialValues={initialValues}
       validationSchema={LoginValidationSchema}
       onSubmit={handleValidSubmit}>
@@ -99,8 +91,7 @@ const LoginScreen = ({ navigation }: Props) => {
                   <Text
                     style={tw`text-md text-gray-700 self-center mt-5`}
                     onPress={(e) => {
-                      // e.preventDefault();
-                      // Keyboard.dismiss();
+                     
                       Alert.alert("Not yet available");
                     }}>
                     Forgotten your password?
@@ -109,7 +100,8 @@ const LoginScreen = ({ navigation }: Props) => {
               </View>
             </ScrollView>
             <Button
-              disabled={!isValid}
+              loading={isLoading}
+              disabled={!isValid || isLoading}
               title="Login"
               buttonStyle={tw`btn btn-small`}
               containerStyle={tw`btn-container-small`}

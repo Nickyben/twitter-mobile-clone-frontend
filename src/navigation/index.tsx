@@ -20,20 +20,21 @@ import { updateNavState } from "../redux/actions/navigation";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { AuthStatus } from "../redux/enums";
 
-
 interface IProps {
   colorScheme: ColorSchemeName;
- 
 }
-export default function Navigation({ colorScheme, }: IProps) {
+export default function Navigation({ colorScheme }: IProps) {
   const appNavState = useAppSelector((state) => state.navReducer.appNavState);
   const authStatus = useAppSelector((state) => state.authReducer.status);
+  const token = useAppSelector((state) => state.authReducer.token);
+
   const dispatch = useAppDispatch();
   const [isReady, setIsReady] = React.useState(false);
 
   const handleChangedState = React.useCallback((state) => {
     dispatch(updateNavState(state));
   }, []);
+console.log({ token, authStatus});
 
   return (
     <NavigationContainer
@@ -42,7 +43,7 @@ export default function Navigation({ colorScheme, }: IProps) {
       onStateChange={handleChangedState}
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : TwitterTheme}>
-      {[AuthStatus.IDLE, AuthStatus.ONBOARDING].some((s) => s === authStatus) ? (
+      {authStatus !== AuthStatus.AUTHENTICATED ? (
         <OnboardingStackNavigator />
       ) : (
         <RootDrawerNavigator />

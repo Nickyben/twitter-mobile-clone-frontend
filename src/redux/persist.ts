@@ -14,7 +14,7 @@ export const rootPersistConfig = {
 export const authPersistConfig = {
   key: "auth",
   storage: PersistSecureStore,
-  whitelist: ["bookmarks"],
+  // whitelist: ["token"],
 };
 
 export const navPersistConfig = {

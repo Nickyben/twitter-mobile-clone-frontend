@@ -4,7 +4,7 @@ import { IAuthAction } from './../types';
 
 const initialState: IAuthState = {
   token: null, 
-  token_expires: null,
+  tokenExpires: null,
   error: null,
   user: null,
   status:AuthStatus.IDLE,

@@ -1,45 +1,41 @@
 import { ENDPOINTS } from "../../../api/endpoints";
 import { LoginInputs } from "../../../validation/types";
 import { AuthActionTypes, AuthStatus } from "../../enums";
-import { IAuthAction } from "../../types";
+import { IAuthAction, LoginResponse } from "../../types";
 
 export const loginAction = (loginPayload: LoginInputs) => {
   return async (dispatch, getState, extraArg) => {
-    try {
-      const res = await fetch(ENDPOINTS.login, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+    const res = await fetch(ENDPOINTS.login, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginPayload),
+    });
+
+    let resData: LoginResponse;
+    if (res.ok) {
+      resData = await res.json();
+      const { token, user } = resData?.data || {};
+
+      return dispatch({
+        type: AuthActionTypes.LOGIN,
+        payload: {
+          token,
+          user,
+          status: token ? AuthStatus.AUTHENTICATED : AuthStatus.LOGIN,
         },
-        body: JSON.stringify(loginPayload),
-      });
+      } as IAuthAction);
+    } else {
+      const errors = (await res.json()).errors;
+      //const errorMessage = getErrorMessage();
 
-      let resData;
-      if (res.ok) {
-        resData = await res.json();
-        console.log({ resData });
-
-        return;
-        return dispatch({
-          type: AuthActionTypes.LOGIN,
-          payload: {
-            status: AuthStatus.AUTHENTICATED,
-          },
-        } as IAuthAction);
-      } else {
-        const errors = (await res.json()).errors;
-        //const errorMessage = getErrorMessage();
-
-        const newError = new Error("Login was not successful!") as Error & {
-          data: unknown;
-        };
-        newError.data = errors;
-        throw newError;
-      }
-    } catch (error) {
-      console.log(error.message);
-      throw error;
+      const newError = new Error("Login was not successful!") as Error & {
+        data: unknown;
+      };
+      newError.data = errors;
+      throw newError;
     }
   };
 };
@@ -49,7 +45,9 @@ export const fakeLogout = () => {
     return dispatch({
       type: AuthActionTypes.LOGIN,
       payload: {
-        status: AuthStatus.IDLE,
+        token:null,
+        user:null,
+        status: AuthStatus.LOGIN,
       },
     } as IAuthAction);
   };

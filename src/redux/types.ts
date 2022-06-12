@@ -37,7 +37,7 @@ export interface IUser {
 }
 export interface IAuthState {
   token: string;
-  token_expires: number;
+  tokenExpires: number;
   status: AuthStatus;
   loading: boolean;
   user?: Partial<IUser>;
@@ -56,4 +56,13 @@ export interface IAppNavigationState {
 export interface INavAction {
   type: NavActionTypes;
   payload: NavigationState;
+}
+
+export interface LoginResponse {
+  message: string;
+  data: {
+    userId: string;
+    user?: any;
+    token: string;
+  };
 }
