@@ -56,6 +56,10 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
     marginBottom: tw`mb-1`.marginBottom as number,
     marginTop: tw`mt-3`.marginTop as number,
   },
+  "text-input-round": {
+    fontSize: 15,
+    ...tw`bg-gray-100 w-5/6 rounded-full border-gray-200 p-1 px-4  self-center   self-start `,
+  },
   "text-md": {
     fontSize: 16,
   },

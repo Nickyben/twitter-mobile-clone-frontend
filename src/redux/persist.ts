@@ -21,3 +21,9 @@ export const navPersistConfig = {
   key: "nav",
   storage: AsyncStorage,
 };
+
+
+export const onboardingPersistConfig = {
+  key: "onboarding",
+  storage: AsyncStorage,
+};

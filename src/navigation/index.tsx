@@ -8,11 +8,15 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  NavigationState,
 } from "@react-navigation/native";
 import * as React from "react";
-import { ColorSchemeName } from "react-native";
-
-import LinkingConfiguration from "./LinkingConfiguration";
+import { ColorSchemeName, Platform } from "react-native";
+import * as Linking from "expo-linking";
+import {
+  OnboardingStackNavLinking,
+  RootDrawerNavLinking,
+} from "./LinkingConfiguration";
 import { OnboardingStackNavigator } from "./Stacks/OnboardingStack";
 import { TwitterTheme } from "../constants/TwitterTheme";
 import { RootDrawerNavigator } from "./Drawer/RootDrawer";
@@ -26,28 +30,53 @@ interface IProps {
 export default function Navigation({ colorScheme }: IProps) {
   const appNavState = useAppSelector((state) => state.navReducer.appNavState);
   const authStatus = useAppSelector((state) => state.authReducer.status);
-  const token = useAppSelector((state) => state.authReducer.token);
-
   const dispatch = useAppDispatch();
+  const [initialState, setInitialState] =
+    React.useState<NavigationState>(appNavState);
   const [isReady, setIsReady] = React.useState(false);
 
-  const handleChangedState = React.useCallback((state) => {
-    dispatch(updateNavState(state));
-  }, []);
-console.log({ token, authStatus});
+  const AUTHENTICATED = authStatus === AuthStatus.AUTHENTICATED;
+  const navLinking = AUTHENTICATED
+    ? RootDrawerNavLinking
+    : OnboardingStackNavLinking;
 
+  const handleChangedState = React.useCallback(
+    (state) => {
+      return dispatch(updateNavState(state));
+    },
+    [updateNavState, dispatch]
+  );
+
+  const checkLinkingInitialUrl = React.useCallback(async () => {
+    try {
+      const initialUrl = await Linking.getInitialURL();
+      if (Platform.OS === "web" || initialUrl != null) {
+        console.log("done");
+        setInitialState(undefined);
+      }
+    } finally {
+      setIsReady(true);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    !isReady && checkLinkingInitialUrl();
+  }, [checkLinkingInitialUrl]);
+
+  if (!isReady) {
+    return null;
+  }
+
+  // console.log({ initialState });
   return (
     <NavigationContainer
       onReady={() => 0}
-      initialState={appNavState}
+      // fallback
+      initialState={initialState}
       onStateChange={handleChangedState}
-      linking={LinkingConfiguration}
+      linking={navLinking}
       theme={colorScheme === "dark" ? DarkTheme : TwitterTheme}>
-      {authStatus !== AuthStatus.AUTHENTICATED ? (
-        <OnboardingStackNavigator />
-      ) : (
-        <RootDrawerNavigator />
-      )}
+      {AUTHENTICATED ? <RootDrawerNavigator /> : <OnboardingStackNavigator />}
     </NavigationContainer>
   );
 }

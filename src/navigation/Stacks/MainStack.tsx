@@ -11,14 +11,13 @@ import * as React from "react";
 import { ColorSchemeName, Image, Pressable } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
+import NotFoundScreen from "../../screens/NotFoundScreen";
 import { BottomTabNavigator } from "../Tabs/BottomTab";
 
 
 import { MainStackParamList, OnboardingStackParamList, OnboardingStackScreenProps } from "../types";
 
-const FakeComponent = () => {
-  return <></>;
-};
+
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
@@ -32,17 +31,16 @@ export function MainStackNavigator() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-      
       }}>
       <Stack.Screen
-        name="MainTab"
+        name="MainBottomTab"
         component={BottomTabNavigator}
         options={{}}
       />
 
     
 
-      <Stack.Screen name="Notfound" component={FakeComponent} options={{}} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{}} />
       {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="VerifyCode" component={ModalScreen} options={{}} />
       </Stack.Group> */}

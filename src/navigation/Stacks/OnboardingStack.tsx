@@ -13,6 +13,7 @@ import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import LoginScreen from "../../screens/auth/LoginScreen";
 import ModalScreen from "../../screens/ModalScreen";
+import NotFoundScreen from "../../screens/NotFoundScreen";
 import BioScreen from "../../screens/onboarding/BioScreen";
 import ConnectAddressBookScreen from "../../screens/onboarding/ConnectAddressBookScreen";
 import CreateAccountScreen from "../../screens/onboarding/CreateAccountScreen";
@@ -43,6 +44,7 @@ export function OnboardingStackNavigator() {
 
   return (
     <Stack.Navigator
+      initialRouteName="GetStarted"
       screenOptions={{
         headerTitleAlign: "center",
         headerTransparent: true,
@@ -100,7 +102,7 @@ export function OnboardingStackNavigator() {
         options={{}}
       />
 
-      <Stack.Screen name="Notfound" component={FakeComponent} options={{}} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{}} />
       {/* <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="VerifyCode" component={ModalScreen} options={{}} />
       </Stack.Group> */}

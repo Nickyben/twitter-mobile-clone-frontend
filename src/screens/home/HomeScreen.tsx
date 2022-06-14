@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'transparent'
   },
   title: {
     fontSize: 20,

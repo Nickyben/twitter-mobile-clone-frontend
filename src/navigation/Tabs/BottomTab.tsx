@@ -3,15 +3,18 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome, Fontisto, Ionicons, Octicons } from "@expo/vector-icons";
-import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { DrawerActions, NavigationProp } from "@react-navigation/native";
-
+import { Ionicons, Octicons } from "@expo/vector-icons";
+import {
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
+import { DrawerActions,  } from "@react-navigation/native";
 import * as React from "react";
-import { Image, Pressable } from "react-native";
+import { Alert, Image, Pressable } from "react-native";
 import { Avatar } from "react-native-elements";
+import Config from "../../../Config";
 import SvgIcon from "../../components/icons/svg/TabIcons";
 import Colors from "../../constants/Colors";
+import { useAppSelector } from "../../hooks/redux";
 import useColorScheme from "../../hooks/useColorScheme";
 import HomeScreen from "../../screens/home/HomeScreen";
 import MessagesScreen from "../../screens/messages/MessagesScreen";
@@ -20,28 +23,35 @@ import SearchScreen from "../../screens/search/SearchScreen";
 import SpacesScreen from "../../screens/spaces/SpacesScreen";
 import tw from "../../styles/tailwind/tailwind";
 
-import {  RootTabNavigationProp, RootTabParamList, RootTabScreenProps } from "../types";
+import {
+  MainBottomTabParamList,
+  MainBottomTabScreenProps,
+} from "../types";
+import { HomeTopTabNavigator } from "./HomeTopTab";
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-interface IProps{
-  avatar: string
-}
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+
+const { BASE_URL } = Config || {};
+
+const BottomTab = createBottomTabNavigator<MainBottomTabParamList>();
 
 //TODO: CALL USE_SELECTOR FOR THE AVATAR
-export function BottomTabNavigator({avatar}:IProps) {
+export function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const user = useAppSelector((state) => state.authReducer.user);
+
+  const { avatarUrl } = user || {};
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeTopTab"
       screenOptions={({
         navigation,
-      }: RootTabScreenProps<keyof RootTabParamList>) => ({
+      }: MainBottomTabScreenProps<keyof MainBottomTabParamList>) => ({
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerLeft: () => (
@@ -55,32 +65,43 @@ export function BottomTabNavigator({avatar}:IProps) {
               rounded
               containerStyle={tw`ml-4`}
               source={
-                avatar ? { uri: avatar } : require("../../../assets/images/user.png")
+                avatarUrl
+                  ? { uri: `${BASE_URL}/${avatarUrl}` }
+                  : require("../../../assets/images/user.png")
               }
             />
           </Pressable>
         ),
       })}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<"Home">) => ({
+        name="HomeTopTab"
+        component={HomeTopTabNavigator}
+        options={({ navigation }: MainBottomTabScreenProps<"HomeTopTab">) => ({
           title: "Home",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="home" color={color} focused={focused} />
           ),
-
+          headerTitleAlign: "center",
+          headerTransparent: true,
+          headerTintColor: Colors[colorScheme].primary,
+          headerStyle: { backgroundColor: Colors[colorScheme].background },
+          headerTitle: () => (
+            <Image
+              source={require("../../../assets/images/twitterLogoBlue.png")}
+              width={27}
+              style={{ aspectRatio: 27 / 22 }}
+            />
+          ),
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Modal")}
+              onPress={() => Alert.alert("Not yet ready")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
+              <Image
+                source={require("../../../assets/icons/images/timeline.png")}
+                width={27}
+                style={tw`mr-4`}
               />
             </Pressable>
           ),
@@ -160,7 +181,6 @@ function TabBarIcon({
       />
     );
   }
-
 
   if (name === "search") {
     return (

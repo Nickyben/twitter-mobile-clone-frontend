@@ -7,6 +7,10 @@ import {
   BottomTabNavigationProp,
   BottomTabScreenProps,
 } from "@react-navigation/bottom-tabs";
+import {
+  MaterialTopTabScreenProps,
+  MaterialTopTabNavigationProp,
+} from "@react-navigation/material-top-tabs";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import {
   CompositeScreenProps,
@@ -25,7 +29,7 @@ declare global {
 
 //STACKS
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  Root:undefined;
   Modal: undefined;
   NotFound: undefined;
 };
@@ -33,24 +37,13 @@ export type RootStackParamList = {
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
-//TABS
-export type RootTabParamList = {
-  Home: undefined;
-  Search: undefined;
-  Spaces: undefined;
-  Notifications: undefined;
-  Messages: undefined;
-};
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>
-  >;
-export type RootTabNavigationProp = BottomTabNavigationProp<
-  RootTabParamList,
-  keyof RootTabParamList
->;
+
+
+
+//TODO:Remove code above
+
+//TODO:CHECK OUT THE CompositeScreenProps, NativeStackScreenProps Generics
 
 //=========================================================================================================
 //=========================================================================================================
@@ -58,13 +51,17 @@ export type RootTabNavigationProp = BottomTabNavigationProp<
 //=========================================  STRUCTURE  ===================================================
 //=========================================================================================================
 //=========================================================================================================
-export type Extras = {
-  Notfound: undefined;
+export type ExtrasStackParamList = {
+  NotFound: undefined;
+  RootFallback: undefined;
 };
+
+export type ExtrasStackScreenProps<Screen extends keyof ExtrasStackParamList> =
+  NativeStackScreenProps<ExtrasStackParamList, Screen>;
 //=========================================================================================================
 //==============================  ONBOARDING & AUTHENTICATION =============================================
 //=========================================================================================================
-export type OnboardingStackParamList = Extras & {
+export type OnboardingStackParamList = ExtrasStackParamList & {
   GetStarted: undefined;
   Username: undefined;
   CreateAccount: { username: string };
@@ -122,8 +119,8 @@ export type RootDrawerScreenProps<Screen extends keyof RootDrawerParamList> =
 //=========================================================================================================
 //=========================================  MAIN STACK  ==================================================
 //=========================================================================================================
-export type MainStackParamList = Extras & {
-  MainTab: NavigatorScreenParams<BottomTabParamList> | undefined;
+export type MainStackParamList = ExtrasStackParamList & {
+  MainBottomTab: NavigatorScreenParams<MainBottomTabParamList> | undefined;
   TweetDetail: undefined;
   CommentAction: undefined;
   SearchTopTab: undefined;
@@ -144,16 +141,39 @@ export type MainStackScreenProps<Screen extends keyof MainStackParamList> =
 //=========================================================================================================
 //=========================================  MAIN TAB  ====================================================
 //=========================================================================================================
-export type BottomTabParamList = {
-  Home: undefined;
+export type MainBottomTabParamList = {
+  HomeTopTab: NavigatorScreenParams<HomeTopTabParamList> | undefined;
   Search: undefined;
   Spaces: undefined;
   Notifications: undefined;
   Messages: undefined;
 };
 
-export type MainTabScreenProps<Screen extends keyof BottomTabParamList> =
+export type MainBottomTabScreenProps<Screen extends keyof MainBottomTabParamList> =
   CompositeScreenProps<
-    BottomTabScreenProps<BottomTabParamList, Screen>,
+    BottomTabScreenProps<MainBottomTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+
+export type MainBottomTabNavigationProp = BottomTabNavigationProp<
+  MainBottomTabParamList,
+  keyof MainBottomTabParamList
+>;
+
+//=========================================================================================================
+//=========================================  HOME TOP TAB  ====================================================
+//=========================================================================================================
+export type HomeTopTabParamList = {
+  Home: undefined;
+} & Record<string, undefined>;
+
+export type HomeTopTabScreenProps<Screen extends keyof HomeTopTabParamList> =
+  CompositeScreenProps<
+    MaterialTopTabScreenProps<HomeTopTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
+
+export type HomeTopTabNavigationProp = MaterialTopTabNavigationProp<
+  HomeTopTabParamList,
+  keyof HomeTopTabParamList
+>;
