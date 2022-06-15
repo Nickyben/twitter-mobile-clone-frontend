@@ -1,9 +1,41 @@
+import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet } from "react-native";
+import { useCallback, useEffect } from "react";
+import { Platform, StyleSheet, TextInput } from "react-native";
 
 import { Text, View } from "../../components/Themed";
+import { MainBottomTabScreenProps } from "../../navigation/types";
+import tw from "../../styles/tailwind/tailwind";
 
-export default function MessagesScreen() {
+export default function MessagesScreen({
+  navigation: { setOptions },
+}: MainBottomTabScreenProps<"Messages">) {
+
+ const handleSearch = useCallback((searchKeyWord: string) => {
+   console.log(searchKeyWord);
+ }, []);
+
+  useEffect(() => {
+    setOptions({
+      headerTitleStyle: tw`hidden` as any,
+      headerRight: () => {
+        return (
+          <View
+            style={tw`flex-row  self-start w-full justify-between pr-4 items-center`}>
+            <TextInput
+              value={undefined}
+              style={tw`text-input-round `}
+              onChangeText={handleSearch}
+              onBlur={() => 3}
+              placeholder={"Search Direct Messages"}
+            />
+            <Ionicons name="md-settings-outline" size={24} style={tw`ml-6`} />
+          </View>
+        );
+      },
+    });
+  }, [setOptions]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Messages Screen</Text>

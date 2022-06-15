@@ -54,6 +54,8 @@ export function BottomTabNavigator() {
       }: MainBottomTabScreenProps<keyof MainBottomTabParamList>) => ({
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerTitleStyle: tw`ml-4`,
+
         headerLeft: () => (
           <Pressable
             style={({ pressed }) => ({
@@ -122,6 +124,7 @@ export function BottomTabNavigator() {
         component={SpacesScreen}
         options={{
           title: "Spaces",
+          headerTitle: "Twitter",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="spaces" color={color} focused={focused} />
           ),

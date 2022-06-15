@@ -58,7 +58,8 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
   },
   "text-input-round": {
     fontSize: 15,
-    ...tw`bg-gray-100 w-5/6 rounded-full border-gray-200 p-1 px-4  self-center   self-start `,
+    borderWidth:1/5,
+    ...tw`bg-gray-100 flex-1 rounded-full border-gray-300 p-1 px-4  `,
   },
   "text-md": {
     fontSize: 16,
