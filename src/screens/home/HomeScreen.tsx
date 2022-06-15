@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 
 import { Text, View } from "../../components/Themed";
@@ -8,7 +7,7 @@ import { fakeLogout } from "../../redux/actions/auth/loginAction";
 import tw from "../../styles/tailwind/tailwind";
 
 export default function HomeScreen() {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <View style={styles.container}>
@@ -18,10 +17,8 @@ export default function HomeScreen() {
         buttonStyle={tw`btn`}
         containerStyle={tw`mt-6`}
         titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())} //navigation.navigate("Username")}
+        onPress={() => dispatch(fakeLogout())}
       />
-      {/* Use a light status bar on iOS to account for the black space above the modal
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} /> */}
     </View>
   );
 }
@@ -31,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent",
   },
   title: {
     fontSize: 20,

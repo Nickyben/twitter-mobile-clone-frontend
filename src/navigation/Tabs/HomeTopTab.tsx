@@ -30,9 +30,9 @@ export function HomeTopTabNavigator() {
         })}
       />
       <TopTab.Screen
-        name="Settings"
+        name="List"
         component={HomeScreen}
-        options={({ route }: HomeTopTabScreenProps<"Settings">) => ({})}
+        options={({ route }: HomeTopTabScreenProps<"List">) => ({})}
       />
     </TopTab.Navigator>
   );
@@ -61,7 +61,7 @@ const Label = ({
       <Text
         style={[
           tw`${
-            focused ? "font-bold " : "font-semibold"
+            focused ? "font-bold " : "font-semibold text-gray-400"
           } text-md    text-center my-auto`,
           style,
         ]}>

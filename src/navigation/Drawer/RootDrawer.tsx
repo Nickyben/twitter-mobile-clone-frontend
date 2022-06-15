@@ -10,6 +10,7 @@ import tw from "../../styles/tailwind/tailwind";
 import ModalScreen from "../../screens/ModalScreen";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { CustomDrawerContent } from "./DrawerContent";
+import ProfileScreen from "../../screens/profile/ProfileScreen";
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 export const RootDrawerNavigator = () => {
@@ -25,7 +26,7 @@ export const RootDrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Profile"
-        component={ModalScreen}
+        component={ProfileScreen}
         options={{ drawerItemStyle: tw`` }}
       />
       <Drawer.Screen

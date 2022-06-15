@@ -18,7 +18,7 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
   "btn-small": {
     alignSelf: "flex-end",
     paddingVertical: 5,
-    paddingHorizontal: 18,
+    paddingHorizontal: 16,
   },
   "btn-container": {
     ...tw`mt-2 ml-3 rounded-full`,
@@ -36,7 +36,7 @@ const extraUtilities: Record<string, ViewStyle | TextStyle | ImageStyle> = {
     marginTop: 24,
     paddingVertical: 14,
     paddingBottom: 25,
-    paddingHorizontal: 26,
+    paddingHorizontal: 24,
   },
 
   "btn-text": {
@@ -104,6 +104,7 @@ module.exports = {
         primary: tintColorPrimary,
         lightPrimary: lightPrimary,
         disabled: "#ff0",
+        'black-transparent': '#0003',
         "gray-black": "#010101",
         "grey-black": "#010101",
         "sonic-silver": "#747474",

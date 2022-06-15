@@ -49,13 +49,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       {...props}
       style={tw`pt-0  `}
       contentContainerStyle={tw``}>
-      <CustomDrawerHeader />
+      <CustomDrawerHeader {...props} />
       {/* <DrawerItemList {...props}  />  descriptors[state.routes[0].key] */}
       <View style={tw` flex-1 pt-1 `}>
         {routeNames
           .filter((r) => r !== "MainStack")
           .map((routeName, index) => {
-            const isTwitterSpecial = ['Monetisation', 'TwitterAds'].some(rn=>rn === routeName);
+            const isTwitterSpecial = ["Monetisation", "TwitterAds"].some(
+              (rn) => rn === routeName
+            );
             return (
               <DrawerItem
                 // isFocused={state.history[state.history.length-1].key}
@@ -70,9 +72,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
                 onPress={() => navigation.navigate(routeName)}
                 labelStyle={tw` -ml-2  text-md  text-gray-900 font-normal`}
                 style={tw` mx-4  p-0 pl-0  ${
-                  isTwitterSpecial
-                    ? "pb-4 px-4 mx-0 border-b-1 border-gray-300"
-                    : ""
+                  isTwitterSpecial ? "pb-4 px-4 mx-0 border-b-1 border-gray-300" : ""
                 }`}
               />
             );
