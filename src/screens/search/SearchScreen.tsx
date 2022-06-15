@@ -22,7 +22,6 @@ export default function SearchScreen({
 
   useEffect(() => {
     setOptions({
-      headerTitleStyle: tw`hidden` as any,
       headerRight: () => {
         return (
           <View

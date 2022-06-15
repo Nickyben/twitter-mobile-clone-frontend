@@ -10,10 +10,10 @@ import {
   Pressable,
 } from "react-native";
 import { Button } from "react-native-elements";
-import OnboardHeadTexts from "../src/components/onboarding/OnboardHeadTexts";
-import { Text, View } from "../src/components/Themed";
-import { FollowUser } from "../src/data/onboarding";
-import tw from "../src/styles/tailwind/tailwind";
+import OnboardHeadTexts from "../../src/components/onboarding/OnboardHeadTexts";
+import { Text, View } from "../../src/components/Themed";
+import { FollowUser } from "../../src/data/onboarding";
+import tw from "../../src/styles/tailwind/tailwind";
 import FollowPerson from "./FollowPerson";
 interface IProps {
   followUsers: Array<FollowUser>;

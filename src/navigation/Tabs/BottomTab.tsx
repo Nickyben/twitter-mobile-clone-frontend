@@ -114,6 +114,7 @@ export function BottomTabNavigator() {
         component={SearchScreen}
         options={{
           title: "Search",
+          headerTitleStyle: tw`hidden` as any,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="search" color={color} focused={focused} />
           ),
@@ -145,6 +146,7 @@ export function BottomTabNavigator() {
         component={MessagesScreen}
         options={{
           title: "Messages",
+          headerTitleStyle: tw`hidden` as any,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="messages" color={color} focused={focused} />
           ),

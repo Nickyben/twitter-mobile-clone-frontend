@@ -2,14 +2,14 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 import { Avatar, Button } from "react-native-elements";
-import { Text } from "../src/components/Themed";
-import Colors, { tintColorDark, tintColorPrimary } from "../src/constants/Colors";
+import { Text } from "../../src/components/Themed";
+import Colors, { tintColorDark, tintColorPrimary } from "../../src/constants/Colors";
 import {
   FollowUser,
   InterestCategories,
   InterestItem,
-} from "../src/data/onboarding";
-import tw from "../src/styles/tailwind/tailwind";
+} from "../../src/data/onboarding";
+import tw from "../../src/styles/tailwind/tailwind";
 
 interface IProps extends FollowUser {
   handlerFollow?: (userId: string) => void;
@@ -35,7 +35,7 @@ const FollowerPerson = ({
       <Avatar
         size={55}
         rounded
-        source={avatar ? { uri: avatar } : require("../assets/images/user.png")}
+        source={avatar ? { uri: avatar } : require("../../assets/images/user.png")}
       />
       <View style={tw`ml-4 flex-1 `}>
         <View style={tw`flex-1 flex-row justify-between items-center`}>

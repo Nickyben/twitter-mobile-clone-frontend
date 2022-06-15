@@ -8,10 +8,10 @@ import {
   ScrollView,
 } from "react-native";
 import { Button } from "react-native-elements";
-import { Text, View } from "../src/components/Themed";
-import Colors, { tintColorDark, tintColorPrimary } from "../src/constants/Colors";
-import { InterestCategories, InterestItem } from "../src/data/onboarding";
-import tw from "../src/styles/tailwind/tailwind";
+import { Text, View } from "../../src/components/Themed";
+import Colors, { tintColorDark, tintColorPrimary } from "../../src/constants/Colors";
+import { InterestCategories, InterestItem } from "../../src/data/onboarding";
+import tw from "../../src/styles/tailwind/tailwind";
 interface IProps {
   interestCat: InterestCategories;
   selectedInterests: Array<string>;

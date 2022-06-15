@@ -3,7 +3,7 @@ import { HeaderBackButton } from "@react-navigation/elements";
 import { Fragment, useEffect } from "react";
 import { Platform, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
-import ProfileTopContent from "../../../components/profile/ProfileTopContent";
+import ProfileTopContent from "../../components/profile/ProfileTopContent";
 import { isAndroid } from "../../../Config";
 
 import { Text, View } from "../../components/Themed";

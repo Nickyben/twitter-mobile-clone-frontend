@@ -6,7 +6,7 @@ import { Button } from "react-native-elements";
 import { OnboardingStackScreenProps } from "../../navigation/types";
 import OnboardHeadTexts from "../../components/onboarding/OnboardHeadTexts";
 import { useHeaderHeight } from "@react-navigation/elements";
-import InterestsSelectionList from "../../../components/InterestsSelectionList";
+import InterestsSelectionList from "../../components/InterestsSelectionList";
 import { initialInterestCategoriesData } from "../../data/onboarding";
 
 type Props = OnboardingStackScreenProps<"InterestedIn"> & {

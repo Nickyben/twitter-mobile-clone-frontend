@@ -7,7 +7,7 @@ import {
   initialInterestCategoriesData,
   initialSuggestedFollows,
 } from "../../data/onboarding";
-import FollowSuggestionsList from "../../../components/FollowSuggestionsList";
+import FollowSuggestionsList from "../../components/FollowSuggestionsList";
 
 type Props = OnboardingStackScreenProps<"Suggestions"> & {
   prop1: string;
