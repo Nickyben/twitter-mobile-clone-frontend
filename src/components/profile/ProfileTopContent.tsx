@@ -8,7 +8,7 @@ import Config from "../../../Config";
 import { tintColorPrimary } from "../../constants/Colors";
 import { useAppSelector } from "../../hooks/redux";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Icon } from "@expo/vector-icons/build/createIconSet";
+import { formatISO, format } from "date-fns";
 
 export default function ProfileTopContent({ userId }) {
   const headerHeight = useHeaderHeight();
@@ -34,7 +34,7 @@ export default function ProfileTopContent({ userId }) {
         <Image source={{ uri: `${Config.BASE_URL}/${headerUrl}` }} />
       ) : (
         <View
-          style={tw`  py-5 bg-[${tintColorPrimary}] h-[${
+          style={tw`  py-5 bg-primary h-[${
             headerHeight * 2
           }px] `}></View>
       )}
@@ -77,17 +77,31 @@ export default function ProfileTopContent({ userId }) {
           }}>
           {bio}
         </Text>
-        <View style={tw`flex-row mt-2 flex-wrap `} transparent>
-          {["location", "websiteUrl", "dateOfBirth", "joined"].map(
-            (extra, index) => {
-              return (
-                <ProfileExtra key={index} style={tw``}>
-                  {Date.parse(user[extra]) ? "Joined "  :'' }
-                  {user[extra] || extra}
-                </ProfileExtra>
-              );
+        <View style={tw`flex-row mt-1 flex-wrap  `} transparent>
+          {[location, websiteUrl, dateOfBirth, joined].map((extra, index) => {
+            if (!extra) {
+              return null;
             }
-          )}
+            return (
+              <ProfileExtra key={index} style={tw``}>
+                {Date.parse(extra)
+                  ? index === 2
+                    ? `Born ${format(new Date(extra), "d MMMMMM ")}`
+                    : `Joined ${format(new Date(extra), "MMMMMM Y")}`
+                  : extra}
+              </ProfileExtra>
+            );
+          })}
+        </View>
+        <View style={tw` flex-row mt-2  ml-2`}>
+          <Text style={tw`text-sm text-gray-700 font-bold `}>
+            {followingCount}{" "}
+            <Text style={tw`text-sm text-gray-500 font-normal `}> Following</Text>
+          </Text>
+          <Text style={tw`text-sm text-gray-700 font-bold ml-3`}>
+            {followersCount}{" "}
+            <Text style={tw`text-sm text-gray-500 font-normal `}> Followers</Text>
+          </Text>
         </View>
       </View>
     </View>
@@ -114,7 +128,12 @@ const ProfileExtra = ({
         style={tw` mr-2 `}
       />
 
-      <Text style={tw`text-sm text-gray-400  flex-1`} {...otherProps}>
+      <Text
+        style={tw`text-sm text-gray-400  flex-1`}
+        {...otherProps}
+        onPressLink={(link) => {
+          Alert.alert(link);
+        }}>
         {children}
       </Text>
     </View>

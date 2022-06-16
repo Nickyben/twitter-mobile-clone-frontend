@@ -28,7 +28,7 @@ type ThemeProps = {
 };
 
 export type TextProps = ThemeProps &
-  DefaultText["props"] & { onPressLink?:(linkText: string) => void };
+  DefaultText["props"] & { onPressLink?: (linkText: string) => void };
 export type ViewProps = ThemeProps &
   DefaultView["props"] & { transparent?: boolean };
 
@@ -51,12 +51,24 @@ export function Text(props: TextProps) {
             text.startsWith("@") ||
             validator.isURL(text)
           ) {
+            if (validator.isURL(text)) {
+              return (
+                <DefaultText
+                  key={index}
+                  style={[{ color: tintColorPrimary }]}
+                  onPress={() => onPressLink && onPressLink(text)}>
+                  {index === texts.length - 1
+                    ? text.replace("https://", "")
+                    : text.replace("https://", "") + " "}
+                </DefaultText>
+              );
+            }
             return (
               <DefaultText
                 key={index}
                 style={[{ color: tintColorPrimary }]}
-                onPress={() => onPressLink(text)}>
-                {text}{" "}
+                onPress={() => onPressLink && onPressLink(text)}>
+                {index === texts.length - 1 ? text : text + " "}
               </DefaultText>
             );
           }

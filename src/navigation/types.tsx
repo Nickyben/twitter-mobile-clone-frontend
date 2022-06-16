@@ -18,6 +18,7 @@ import {
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CreateAccountInputs } from "../validation/types";
+import { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -29,17 +30,13 @@ declare global {
 
 //STACKS
 export type RootStackParamList = {
-  Root:undefined;
+  Root: undefined;
   Modal: undefined;
   NotFound: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
-
-
-
-
 
 //TODO:Remove code above
 
@@ -176,4 +173,29 @@ export type HomeTopTabScreenProps<Screen extends keyof HomeTopTabParamList> =
 export type HomeTopTabNavigationProp = MaterialTopTabNavigationProp<
   HomeTopTabParamList,
   keyof HomeTopTabParamList
+>;
+
+//=========================================================================================================
+//=========================================  HOME TOP TAB  ====================================================
+//=========================================================================================================
+export type ProfileTabScreenParams = {
+  startScrollTabBar: boolean;
+  onTabBarScrollToTop:  (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
+};
+export type ProfileTopTabParamList = {
+  Tweets: ProfileTabScreenParams;
+  TweetsAndReplies: ProfileTabScreenParams;
+  Media: ProfileTabScreenParams;
+  Likes: ProfileTabScreenParams;
+};
+
+export type ProfileTopTabScreenProps<Screen extends keyof ProfileTopTabParamList> =
+  CompositeScreenProps<
+    MaterialTopTabScreenProps<ProfileTopTabParamList, Screen>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
+
+export type ProfileTopTabNavigationProp = MaterialTopTabNavigationProp<
+  ProfileTopTabParamList,
+  keyof ProfileTopTabParamList
 >;

@@ -51,7 +51,7 @@ export default function Navigation({ colorScheme }: IProps) {
     try {
       const initialUrl = await Linking.getInitialURL();
       if (Platform.OS === "web" || initialUrl != null) {
-        console.log("done");
+        console.log("nav state set to undefined");
         setInitialState(undefined);
       }
     } finally {

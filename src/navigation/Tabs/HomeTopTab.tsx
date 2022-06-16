@@ -1,5 +1,5 @@
-import { useHeaderHeight } from "@react-navigation/elements";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useHeaderHeight,  } from "@react-navigation/elements";
+import { createMaterialTopTabNavigator,  } from "@react-navigation/material-top-tabs";
 import { TextStyle } from "react-native";
 import { Text, View } from "../../components/Themed";
 import HomeScreen from "../../screens/home/HomeScreen";
@@ -17,6 +17,10 @@ export function HomeTopTabNavigator() {
         route,
       }: HomeTopTabScreenProps<keyof HomeTopTabParamList>) => ({
         tabBarStyle: tw` border-t-1 `,
+
+        tabBarContentContainerStyle: tw` min-w-full items-center justify-around`,
+        tabBarItemStyle: tw` w-auto `,
+
         tabBarLabel: (props) => {
           return <Label label={route.name} {...props} />;
         },
@@ -48,14 +52,12 @@ const Label = ({
   color?: string;
   style?: TextStyle;
 }) => {
-  const headerHeight = useHeaderHeight();
-  const escapeStyle = ` -mb-[${headerHeight / 8}px] pb-[${headerHeight / 8}px]`;
   return (
     <View
       style={[
         tw`${
           focused ? "  border-primary" : "border-transparent"
-        } bg-transparent border-b-3   items-center justify-center  self-center  pb-3  -mb-3 px-2`,
+        } bg-transparent border-b-3   items-center justify-center  self-center  pb-3  -mb-3 px-2 `,
         {},
       ]}>
       <Text
