@@ -104,7 +104,7 @@ module.exports = {
         primary: tintColorPrimary,
         lightPrimary: lightPrimary,
         disabled: "#ff0",
-        'black-transparent': '#0003',
+        'primary-transparent': tintColorPrimary+'22',
         "gray-black": "#010101",
         "grey-black": "#010101",
         "sonic-silver": "#747474",

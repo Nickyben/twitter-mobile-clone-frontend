@@ -1,6 +1,13 @@
-import { useEffect, useState } from "react";
-import { NativeSyntheticEvent, ScrollView, StyleSheet } from "react-native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  NativeSyntheticEvent,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Button } from "react-native-elements";
+import { FlatList } from "react-native-gesture-handler";
 
 import { Text, View } from "../../components/Themed";
 import { useAppDispatch } from "../../hooks/redux";
@@ -12,133 +19,38 @@ import {
 } from "../../navigation/types";
 import { fakeLogout } from "../../redux/actions/auth/loginAction";
 import tw from "../../styles/tailwind/tailwind";
+import Tweet from "../Tweet";
+import ProfileTopContent from "./ProfileTopContent";
 
-type IProps = ProfileTopTabScreenProps<keyof ProfileTopTabParamList> &  ProfileTabScreenParams
+type IProps = ProfileTopTabScreenProps<keyof ProfileTopTabParamList> &
+  ProfileTabScreenParams;
+
 
 export default function ProfileTweetsList({
-  navigation,
-  route: { params },
-  startScrollTabBar,
-  onTabBarScrollToTop
+  listKey,
+  startTopBarScroll: scrollEnabled,
+  onChildScrollViewEndDrag,
+  startTopBarScroll,
+  onChildEndReached,
 }: IProps) {
-  // console.log({ scrollTopBar: startScrollTabBar });
+  const renderItem = useCallback(({ item }) => {
+    return (
+     <Tweet />
+    );
+  }, []);
+
   return (
-    <ScrollView
-      style={tw` px-4`}
-      onScroll={onTabBarScrollToTop}
-      scrollEnabled={startScrollTabBar}
-      contentContainerStyle={tw``}>
-      <Text style={styles.title}>Profile Screen</Text>
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mb-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => 2}
-      />
-    </ScrollView>
+    <FlatList
+      listKey={listKey}
+//       scrollEnabled={startTopBarScroll}
+      // onScrollEndDrag={onChildScrollViewEndDrag}
+//       onEndReached={onChildEndReached}
+      style={[tw`   `]}
+      data={[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 0, 11, 21, 23]}
+      renderItem={renderItem}
+      contentContainerStyle={tw`pb-5 grow bg-green-200`}
+      keyExtractor={(item, index) => index.toString() + "topTabFlatList"}
+      extraData={[scrollEnabled]}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

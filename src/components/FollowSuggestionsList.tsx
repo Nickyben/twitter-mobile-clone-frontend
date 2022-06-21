@@ -64,7 +64,7 @@ const FollowSuggestionsList = ({
 
       isMyFollower;
       return (
-        <Pressable onPress={() => Alert.alert("Not yet available")}>
+        <Pressable onPress={() => Alert.alert("Not yet available")} >
           <FollowPerson
             isFollowedByMe={isFollowed}
             isMyFollower={isMyFollower}
@@ -88,6 +88,7 @@ const FollowSuggestionsList = ({
 
       <FlatList
         style={[tw` mt-[${headerHeight}px] w-full `]}
+        horizontal
         data={followUsers}
         renderItem={renderItem}
         contentContainerStyle={tw`pb-5`}

@@ -1,5 +1,5 @@
-import { Component, Fragment, useEffect } from "react";
-import { Alert, ScrollView } from "react-native";
+import { Component, Fragment, useEffect, useRef } from "react";
+import { Alert, Animated, ScrollView } from "react-native";
 import { Avatar, Button, Image } from "react-native-elements";
 import { Text, TextProps, View } from "../Themed";
 import tw from "../../styles/tailwind/tailwind";
@@ -10,10 +10,20 @@ import { useAppSelector } from "../../hooks/redux";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { formatISO, format } from "date-fns";
 
-export default function ProfileTopContent({ userId }) {
+export default function ProfileTopContent({
+  userId,
+  scaleImage,
+  scrollY
+}: {
+    userId?: string;
+  scrollY:Animated.Value,
+  scaleImage: Animated.AnimatedInterpolation;
+}) {
   const headerHeight = useHeaderHeight();
-  const user = !userId && useAppSelector((state) => state.authReducer.user);
+  const user = useAppSelector((state) => state.authReducer.user);
 
+ 
+  
   const {
     avatarUrl,
     fullName,
@@ -29,21 +39,38 @@ export default function ProfileTopContent({ userId }) {
   } = user || {};
   const headerUrl = null;
   return (
-    <View style={tw`pb-2`}>
-      {headerUrl ? (
-        <Image source={{ uri: `${Config.BASE_URL}/${headerUrl}` }} />
-      ) : (
-        <View
-          style={tw`  py-5 bg-primary h-[${
-            headerHeight * 2
-          }px] `}></View>
-      )}
-      <View style={tw`px-4  `}>
-        <View style={tw` flex-row  justify-between  `} transparent>
-          <Avatar
-            size={headerHeight}
-            containerStyle={tw`border-4 border-white -mt-[${headerHeight / 2}px] `}
-            rounded
+    <View style={tw`pb-2 `}>
+      <Animated.View
+        style={{
+          ...tw`  py-5 bg-primary h-[${headerHeight * 2}px]   `,
+        }}>
+        {headerUrl ? (
+          <Image
+            source={{ uri: `${Config.BASE_URL}/${headerUrl}` }}
+            height={headerHeight * 2}
+          />
+        ) : null}
+      </Animated.View>
+
+      <View style={tw`px-4`}>
+        <Animated.View
+          style={{
+            ...tw` flex-row items-end justify-between -mt-[${
+              headerHeight / 2
+            }px]  `,
+          }}>
+          <Animated.Image
+            width={headerHeight}
+            height={headerHeight}
+            style={{
+              width: headerHeight,
+              height: headerHeight,
+              ...tw`border-4 border-white rounded-full  bottom-0`,
+              transform: [
+                { scale: scaleImage },
+                { translateY: Animated.divide(scrollY, 2.5) },
+              ],
+            }}
             source={
               avatarUrl
                 ? { uri: `${Config.BASE_URL}/${avatarUrl}` }
@@ -53,11 +80,13 @@ export default function ProfileTopContent({ userId }) {
           <Button
             title="Edit profile"
             buttonStyle={tw` btn btn-small bg-transparent border border-gray-300`}
-            containerStyle={tw` mt-4 rounded-full`}
+            containerStyle={tw` mt-[${
+              headerHeight / 2 +10
+            }px]  rounded-full ml-auto`}
             titleStyle={tw`btn-text text-md text-gray-800 `}
             onPress={() => Alert.alert("Not yet ready!")}
           />
-        </View>
+        </Animated.View>
         <View style={tw`flex-row items-center `} transparent>
           <Text style={tw`text-xl text-gray-900 font-bold `}>{fullName}</Text>
           {isVerified && (

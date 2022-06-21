@@ -10,7 +10,7 @@ export default function HomeScreen() {
   const dispatch = useAppDispatch();
 
   return (
-    <ScrollView style={styles.container} >
+    <View style={styles.container} >
       <Text style={styles.title}>Home Screen</Text>
       <Button
         title="Logout"
@@ -89,15 +89,15 @@ export default function HomeScreen() {
         titleStyle={tw`btn-text`}
         onPress={() => dispatch(fakeLogout())}
       />
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,

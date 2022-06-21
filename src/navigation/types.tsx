@@ -179,8 +179,17 @@ export type HomeTopTabNavigationProp = MaterialTopTabNavigationProp<
 //=========================================  HOME TOP TAB  ====================================================
 //=========================================================================================================
 export type ProfileTabScreenParams = {
-  startScrollTabBar: boolean;
-  onTabBarScrollToTop:  (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  startTopBarScroll?: boolean;
+  startScrollTabBar?: boolean;
+  onTabBarScrollToTop?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  childScrollEnabled?: boolean;
+  childScrollView?: React.MutableRefObject<null>;
+  onChildScrollViewBeginDrag?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  onChildScrollViewEndDrag?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  onPressInChildScrollView?: () => void;
+  onChildEndReached:(any)=>void
+
+  listKey?: string;
 };
 export type ProfileTopTabParamList = {
   Tweets: ProfileTabScreenParams;

@@ -40,8 +40,8 @@ const icons = {
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { navigation, state, descriptors } = props || {};
   const routeNames = state.routeNames as Array<keyof RootDrawerParamList>;
-  // console.log({
-  //   state: state,
+  // console.log({ 
+  //   state: sta
   //   // isFocused: descriptors[state.routes.find((r) => r.name === routeName).key],
   // });//mt-[${StatusBar.currentHeight}px]
   return (

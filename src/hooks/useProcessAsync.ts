@@ -38,7 +38,7 @@ export const useProcessAsync = (): IReturn => {
         }
       }
     },
-    []
+    [isMounted]
   );
 
   return {
