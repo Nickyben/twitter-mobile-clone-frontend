@@ -1,0 +1,57 @@
+{
+  "cSpell.ignoreWords": [
+    "Elon",
+    "Fontisto",
+    "Ikay",
+    "Ikechukwu",
+    "Ionicons",
+    "Monetisation",
+    "Nickyben",
+    "Pressable",
+    "Retweeters",
+    "Tranform",
+    "UNFOLLOW",
+    "Unliking",
+    "formik",
+    "foundRetwee",
+    "msvideo",
+    "originalname",
+    "pdfs",
+    "persistor",
+    "quicktime",
+    "retweeter",
+    "securestore",
+    "semibold",
+    "twitterads",
+    "twitterforprofessionals",
+    "twrnc",
+    "unfollowed",
+    "unliked",
+    "uuidv"
+  ],
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": true
+  },
+  "editor.autoClosingQuotes": "always",
+
+  "files.associations": {
+    "*.ejs": "html"
+  },
+  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "style", "tw"],
+  "tailwindCSS.experimental.configFile": "/twitter-mobile-clone-frontend/tailwind.config.ts",
+  "tailwindCSS.experimental.classRegex": [
+    "tw`([^`]*)", // tw`...`
+    "tw=\"([^\"]*)", // <div tw="..." />
+    "tw={\"([^\"}]*)", // <div tw={"..."} />
+    "tw\\.\\w+`([^`]*)", // tw.xxx`...`
+    "tw\\(.*?\\)`([^`]*)", // tw(Component)`...`
+    "tw`([^`]*)",
+    "tw\\.style\\(([^)]*)\\)"
+  ],
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  }
+}

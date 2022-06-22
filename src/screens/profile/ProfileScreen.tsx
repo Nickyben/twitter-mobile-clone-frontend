@@ -11,22 +11,17 @@ import {
   ScrollView,
   useWindowDimensions,
   Animated,
+  LayoutRectangle,
 } from "react-native";
 import { Button } from "react-native-elements";
 import ProfileTopContent from "../../components/profile/ProfileTopContent";
 import { isAndroid } from "../../../Config";
-
 import { Text, View } from "../../components/Themed";
 import Colors, { tintColorDark, tintColorPrimary } from "../../constants/Colors";
 import { useAppDispatch } from "../../hooks/redux";
 import { RootDrawerScreenProps } from "../../navigation/types";
-import { fakeLogout } from "../../redux/actions/auth/loginAction";
 import tw from "../../styles/tailwind/tailwind";
 import { ProfileTopTab } from "../../navigation/Tabs/ProfileTopTab";
-import { NativeEvent } from "react-native-reanimated/lib/types/lib/reanimated2/commonTypes";
-import { StatusBar } from "expo-status-bar";
-import { useProfileScroll } from "../../hooks/useProfileScroll";
-import { useNestedScroll } from "../../hooks/useNestedScroll";
 
 export default function ProfileScreen({
   navigation: { setOptions, goBack, canGoBack },
@@ -34,18 +29,8 @@ export default function ProfileScreen({
   const dispatch = useAppDispatch();
   const headerHeight = useHeaderHeight();
   const { height } = useWindowDimensions();
+  const [topContentLayout, setTopContentLayout] = useState<LayoutRectangle>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
-
-  const {
-    handleScroll,
-    handleTopTabScroll,
-    colorHeader,
-    startTopBarScroll,
-    onParentEndReached,
-    onChildEndReached,
-    setTopBarPosition,
-    onChildScrollViewEndDrag,
-  } = useProfileScroll();
 
   const animateFlatListScroll = Animated.event(
     [
@@ -73,9 +58,14 @@ export default function ProfileScreen({
     outputRange: [0, 0, 1 / 1.25, 1, 1],
   });
 
-  const renderItem = useCallback(({ item }) => {
-    return null;
-  }, []);
+  const onTopContentLayout = useCallback(
+    ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+      setTopContentLayout(layout);
+    },
+    []
+  );
+
+  
 
   useEffect(() => {
     setOptions({
@@ -123,35 +113,23 @@ export default function ProfileScreen({
         );
       },
     });
-  }, [setOptions, colorHeader, goBack, canGoBack]);
+  }, [setOptions, headerOpacity, canGoBack, goBack]);
+
   return (
-    <>
-      <Animated.FlatList
-        onScroll={animateFlatListScroll}
-        style={[tw` `]}
-        data={[]}
-        renderItem={renderItem}
-        contentContainerStyle={tw``}
-        ListHeaderComponent={
-          <ProfileTopContent scaleImage={scale} scrollY={scrollY} />
-        }
-        ListFooterComponent={
-          <ProfileTopTab
-            {...{
-              startTopBarScroll,
-              onChildScrollViewEndDrag,
-              onChildEndReached,
-            }}
-          />
-        }
-        keyExtractor={(item, index) => index.toString() + "containerFlatList"}
-        extraData={[
-          startTopBarScroll,
-          onParentEndReached,
-          onChildScrollViewEndDrag,
-          onChildEndReached,
-        ]}
+    <Animated.View style={[tw`flex-1 bg-transparent `]}>
+      <ProfileTopContent
+        scaleImage={scale}
+        scrollY={scrollY}
+        {...{ onTopContentLayout, animateFlatListScroll }}
       />
+      <ProfileTopTab
+        {...{
+          scrollY,
+          animateFlatListScroll,
+          topContentLayout,
+        }}
+      />
+
       <Button
         title={<Ionicons name="add" size={35} color={tintColorDark} style={tw``} />}
         buttonStyle={tw`p-4 rounded-full`}
@@ -159,33 +137,31 @@ export default function ProfileScreen({
         titleStyle={tw`btn-text text-md text-gray-800 `}
         onPress={() => alert("Not yet ready!")}
       />
-    </>
+    </Animated.View>
   );
 }
 
-{
-  /* <FlatList
-  //       scrollEnabled={parentScrollEnabled}
-  // ref={parentScrollView}
-  scrollEnabled={true}
-  onEndReached={onParentEndReached}
-  style={[tw` `]}
-  data={[]}
-  renderItem={renderItem}
-  contentContainerStyle={tw`pb-5 grow bg-purple-300`}
-  ListHeaderComponent={<ProfileTopContent />}
-  ListFooterComponent={
-    <ProfileTopTab
-      {...{
-        startTopBarScroll,
-        childScrollEnabled,
-        onChildScrollViewBeginDrag,
-        onChildScrollViewEndDrag,
-        onPressInChildScrollView,
-      }}
-    />
-  }
-  keyExtractor={(item, index) => index.toString() + "containerFlatList"}
-  extraData={[startTopBarScroll, onParentEndReached]}
-/>; */
-}
+//  <Animated.FlatList
+//    onScroll={animateFlatListScroll}
+//    style={[tw` `]}
+//    data={[]}
+//    renderItem={renderItem}
+//    contentContainerStyle={tw``}
+//    ListHeaderComponent={<ProfileTopContent scaleImage={scale} scrollY={scrollY} />}
+//    ListFooterComponent={
+//      <ProfileTopTab
+//        {...{
+//          startTopBarScroll,
+//          onChildScrollViewEndDrag,
+//          onChildEndReached,
+//        }}
+//      />
+//    }
+//    keyExtractor={(item, index) => index.toString() + "containerFlatList"}
+//    extraData={[
+//      startTopBarScroll,
+//      onParentEndReached,
+//      onChildScrollViewEndDrag,
+//      onChildEndReached,
+//    ]}
+//  />;

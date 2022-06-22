@@ -1,7 +1,14 @@
 import { useHeaderHeight } from "@react-navigation/elements";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useEffect, useState } from "react";
-import { StatusBar, TextStyle, useWindowDimensions } from "react-native";
+import {
+  Animated,
+  StatusBar,
+  StyleProp,
+  TextStyle,
+  useWindowDimensions,
+  ViewStyle,
+} from "react-native";
 import ProfileTweetsList from "../../components/profile/ProfileTweetsList";
 import { Text, View } from "../../components/Themed";
 import HomeScreen from "../../screens/home/HomeScreen";
@@ -17,56 +24,83 @@ const TopTab = createMaterialTopTabNavigator<ProfileTopTabParamList>();
 export function ProfileTopTab(parentProp: ProfileTabScreenParams) {
   const { height } = useWindowDimensions();
   const headerHeight = useHeaderHeight();
+  const topContentHeight = parentProp?.topContentLayout?.height || 0;
   return (
-    <TopTab.Navigator
-      sceneContainerStyle={tw``}
-      style={tw` min-h-[${height - headerHeight -StatusBar.currentHeight}px] overflow-visible`}
-      // initialLayout={{
-      //   height: height,
-      //   width
-      // }}*asFont
-      showPageIndicator={true}
-      screenOptions={({
-        route,
-      }: ProfileTopTabScreenProps<keyof ProfileTopTabParamList>) => ({
-        tabBarScrollEnabled: true,
+    <Animated.View style={[tw`flex-1 overflow-visible  `]}>
+      <TopTab.Navigator
+        sceneContainerStyle={tw``}
+        style={[tw``]}
+        showPageIndicator={true}
+        screenOptions={({
+          route,
+        }: ProfileTopTabScreenProps<keyof ProfileTopTabParamList>) => ({
+          tabBarScrollEnabled: true,
 
-        tabBarStyle: [tw`  border-gray-300  self-center w-full `,{borderTopWidth:0.2, }],
-        tabBarContentContainerStyle: tw` min-w-full items-center justify-around`,
-        tabBarItemStyle: tw` w-auto `,
-        tabBarIndicatorStyle: tw`bg-primary hidden`,
-        tabBarLabel: (props) => {
-          let label: string = route.name;
-          if (route.name === "TweetsAndReplies") {
-            label = "Tweets & replies";
+          tabBarStyle: [
+            tw`  border-gray-300  self-center w-full  top-[${topContentHeight}px] `,
+            { borderTopWidth: 0.2 },
+            {
+              transform: [
+                {
+                  translateY: parentProp.scrollY.interpolate({
+                    inputRange: [
+                      -1,
+                      0,
+                      0,
+                      topContentHeight > headerHeight
+                        ? topContentHeight - headerHeight
+                        : 0,
+                      topContentHeight,
+                      topContentHeight * 2,
+                    ],
+                    outputRange: [
+                      -1,
+                      0,
+                      0,
+                      headerHeight - topContentHeight,
+                      headerHeight - topContentHeight,
+                      headerHeight - topContentHeight,
+                    ],
+                  }),
+                },
+              ],
+            } as unknown,
+          ],
+          tabBarContentContainerStyle: tw` min-w-full items-center justify-around `,
+          tabBarItemStyle: tw` w-auto `,
+          tabBarIndicatorStyle: tw`bg-primary hidden`,
+          tabBarLabel: (props) => {
+            let label: string = route.name;
+            if (route.name === "TweetsAndReplies") {
+              label = "Tweets & replies";
+            }
+            return <Label label={label} {...props} />;
+          },
+        })}>
+        {["Tweets", "TweetsAndReplies", "Media", "Likes"].map(
+          (name: keyof ProfileTopTabParamList, index) => {
+            return (
+              <TopTab.Screen
+                key={index}
+                name={name}
+                options={({
+                  route,
+                }: ProfileTopTabScreenProps<keyof ProfileTopTabParamList>) => ({})}>
+                {(props) => (
+                  <ProfileTweetsList
+                    listKey={props.route.key}
+                    {...props}
+                    {...parentProp}
+                    // onTabBarScrollToTop={parentProp.onTabBarScrollToTop}
+                    // startScrollTabBar={parentProp.startScrollTabBar}
+                  />
+                )}
+              </TopTab.Screen>
+            );
           }
-          return <Label label={label} {...props} />;
-        },
-      })}>
-      {["Tweets", "TweetsAndReplies", "Media", "Likes"].map(
-        (name: keyof ProfileTopTabParamList, index) => {
-          return (
-            <TopTab.Screen
-              key={index}
-              name={name}
-              options={({
-                route,
-              }: ProfileTopTabScreenProps<keyof ProfileTopTabParamList>) => ({})}>
-              {(props) => (
-                <ProfileTweetsList
-                  listKey={props.route.key}
-                  {...props}
-                  {...parentProp}
-                  // onTabBarScrollToTop={parentProp.onTabBarScrollToTop}
-                  // startScrollTabBar={parentProp.startScrollTabBar}
-                />
-              )}
-            </TopTab.Screen>
-          );
-        }
-      )}
+        )}
 
-      {/* <TopTab.Screen
+        {/* <TopTab.Screen
         name="Tweets"
         component={ProfileTweetsList}
         initialParams={props}
@@ -92,7 +126,8 @@ export function ProfileTopTab(parentProp: ProfileTabScreenParams) {
         initialParams={props}
         options={({ route }: ProfileTopTabScreenProps<"Likes">) => ({})}
       /> */}
-    </TopTab.Navigator>
+      </TopTab.Navigator>
+    </Animated.View>
   );
 }
 

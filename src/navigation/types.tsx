@@ -18,7 +18,7 @@ import {
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CreateAccountInputs } from "../validation/types";
-import { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
+import { Animated, LayoutRectangle, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -187,9 +187,12 @@ export type ProfileTabScreenParams = {
   onChildScrollViewBeginDrag?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
   onChildScrollViewEndDrag?: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
   onPressInChildScrollView?: () => void;
-  onChildEndReached:(any)=>void
-
+  onChildEndReached?: (any) => void;
+  animateFlatListScroll?: (...args: unknown[]) => void;
   listKey?: string;
+  scrollY?: Animated.Value;
+  scaleY?: Animated.AnimatedInterpolation;
+  topContentLayout?: LayoutRectangle;
 };
 export type ProfileTopTabParamList = {
   Tweets: ProfileTabScreenParams;

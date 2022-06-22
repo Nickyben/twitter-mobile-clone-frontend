@@ -1,6 +1,6 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
-import { View } from "react-native";
+import { Animated, View } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import { Text } from "../../src/components/Themed";
 import Colors, { tintColorDark, tintColorPrimary } from "../../src/constants/Colors";
@@ -11,16 +11,27 @@ import {
 } from "../../src/data/onboarding";
 import tw from "../../src/styles/tailwind/tailwind";
 import { ITweet } from "../models/types/tweet";
+import { useIsFocused } from "@react-navigation/native";
 
 interface IProps extends Partial<ITweet> {
   handlerFollow?: (userId: string) => void;
+  scrollY?: Animated.AnimatedInterpolation;
+  isScrolled?: boolean;
 }
 
-const Tweet = ({ tweetMethod, id, author, contentText }: IProps) => {
+const Tweet = ({
+  tweetMethod,
+  id,
+  author,
+  contentText,
+
+}: IProps) => {
   const { avatarUrl, isVerified, username, fullName } = author || {};
   return (
-    <View
-      style={tw`p-5 py-2 flex-row flex-1 border-b-1 border-gray-200  items-center bg-red-100`}>
+    <Animated.View
+      style={[
+        tw` p-5  flex-row  border-b-1 border-gray-200 mt-3 items-center `,
+      ]}>
       <Avatar
         size={55}
         rounded
@@ -50,7 +61,7 @@ const Tweet = ({ tweetMethod, id, author, contentText }: IProps) => {
           {contentText}
         </Text>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

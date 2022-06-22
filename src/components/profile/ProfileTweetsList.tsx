@@ -1,13 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { transform } from "@babel/core";
+import { useHeaderHeight } from "@react-navigation/elements";
+import { useIsFocused } from "@react-navigation/native";
+import { LegacyRef, useCallback, useEffect, useRef, useState } from "react";
 import {
   NativeSyntheticEvent,
   Pressable,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
+  Animated,
+  NativeScrollEvent,
+  LayoutChangeEvent,
+  LayoutRectangle,
 } from "react-native";
 import { Button } from "react-native-elements";
-import { FlatList } from "react-native-gesture-handler";
 
 import { Text, View } from "../../components/Themed";
 import { useAppDispatch } from "../../hooks/redux";
@@ -25,32 +32,70 @@ import ProfileTopContent from "./ProfileTopContent";
 type IProps = ProfileTopTabScreenProps<keyof ProfileTopTabParamList> &
   ProfileTabScreenParams;
 
-
 export default function ProfileTweetsList({
   listKey,
-  startTopBarScroll: scrollEnabled,
-  onChildScrollViewEndDrag,
-  startTopBarScroll,
-  onChildEndReached,
+  animateFlatListScroll,
+  scrollY,
+  topContentLayout,
 }: IProps) {
+  const flatListRef: LegacyRef<Animated.FlatList<number>> = useRef(null);
+  const topContentHeight = topContentLayout?.height || 0;
+  const flatListScrollY = useRef(scrollY).current;
+  const isFocused = useIsFocused();
+  const headerHeight = useHeaderHeight();
+  const [listTopLayout, setListTopLayout] = useState<LayoutRectangle>();
+  const animateScroll = Animated.event(
+    [
+      {
+        nativeEvent: {
+          contentOffset: {
+            y: scrollY,
+          },
+        },
+      },
+    ],
+    { useNativeDriver: true }
+  );
+
   const renderItem = useCallback(({ item }) => {
-    return (
-     <Tweet />
-    );
+    return <Tweet {...{}} />;
   }, []);
 
+  useEffect(() => {
+    const flatList = flatListRef?.current as FlatList;
+    const scrollYListener = flatListScrollY.addListener(({ value }) => {
+      if (!isFocused && value < Number(listTopLayout?.height) - headerHeight) {
+        !isFocused && flatList.scrollToOffset({ offset: value, animated: false });
+      }
+
+      console.log({  value });
+    });
+
+    return () => flatListScrollY.removeListener(scrollYListener);
+  }, [isFocused]);
+
+  const onListTopLayout = useCallback(
+    ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+      console.log({layoutHeight:layout.height})
+      setListTopLayout(layout);
+    },
+    []
+  );
+
   return (
-    <FlatList
-      listKey={listKey}
-//       scrollEnabled={startTopBarScroll}
-      // onScrollEndDrag={onChildScrollViewEndDrag}
-//       onEndReached={onChildEndReached}
-      style={[tw`   `]}
-      data={[1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 0, 11, 21, 23]}
+    <Animated.FlatList
+      ref={flatListRef}
+      onScroll={isFocused ? animateFlatListScroll : () => null}
+      style={[]}
+      data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17]}
       renderItem={renderItem}
-      contentContainerStyle={tw`pb-5 grow bg-green-200`}
+      ListHeaderComponent={
+        <View
+          style={tw`  min-h-[${topContentHeight}px]  `}
+          onLayout={onListTopLayout}></View>
+      }
+      contentContainerStyle={[tw`pb-5 grow   `]}
       keyExtractor={(item, index) => index.toString() + "topTabFlatList"}
-      extraData={[scrollEnabled]}
     />
   );
 }
