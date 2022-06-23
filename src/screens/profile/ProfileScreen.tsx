@@ -1,18 +1,14 @@
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { HeaderBackButton, useHeaderHeight } from "@react-navigation/elements";
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import {
-  FlatList,
-  LayoutChangeEvent,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  Platform,
-  TouchableOpacity,
-  ScrollView,
-  useWindowDimensions,
-  Animated,
-  LayoutRectangle,
-} from "react-native";
+  Fragment,
+  LegacyRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { LayoutChangeEvent, Animated, LayoutRectangle } from "react-native";
 import { Button } from "react-native-elements";
 import ProfileTopContent from "../../components/profile/ProfileTopContent";
 import { isAndroid } from "../../../Config";
@@ -28,10 +24,13 @@ export default function ProfileScreen({
 }: RootDrawerScreenProps<"Profile">) {
   const dispatch = useAppDispatch();
   const headerHeight = useHeaderHeight();
-  const { height } = useWindowDimensions();
-  const [topContentLayout, setTopContentLayout] = useState<LayoutRectangle>(null);
+  const [topContentLayout, setTopContentLayout] = useState<LayoutRectangle>({
+    height: 0,
+    width: 0,
+    x: 0,
+    y: 0,
+  });
   const scrollY = useRef(new Animated.Value(0)).current;
-
   const animateFlatListScroll = Animated.event(
     [
       {
@@ -65,7 +64,9 @@ export default function ProfileScreen({
     []
   );
 
-  
+  const onScroll = useCallback(({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+    setTopContentLayout(layout);
+  }, []);
 
   useEffect(() => {
     setOptions({
@@ -120,8 +121,9 @@ export default function ProfileScreen({
       <ProfileTopContent
         scaleImage={scale}
         scrollY={scrollY}
-        {...{ onTopContentLayout, animateFlatListScroll }}
+        {...{ onTopContentLayout, topContentLayout }}
       />
+
       <ProfileTopTab
         {...{
           scrollY,
@@ -132,8 +134,8 @@ export default function ProfileScreen({
 
       <Button
         title={<Ionicons name="add" size={35} color={tintColorDark} style={tw``} />}
-        buttonStyle={tw`p-4 rounded-full`}
-        containerStyle={tw` mt-4 rounded-full ml-auto absolute bottom-4 right-4 bg-yellow-500`}
+        buttonStyle={[tw`p-4 rounded-full`]}
+        containerStyle={tw` mt-4 rounded-full ml-auto absolute bottom-4 right-4  z-100`}
         titleStyle={tw`btn-text text-md text-gray-800 `}
         onPress={() => alert("Not yet ready!")}
       />
@@ -141,27 +143,3 @@ export default function ProfileScreen({
   );
 }
 
-//  <Animated.FlatList
-//    onScroll={animateFlatListScroll}
-//    style={[tw` `]}
-//    data={[]}
-//    renderItem={renderItem}
-//    contentContainerStyle={tw``}
-//    ListHeaderComponent={<ProfileTopContent scaleImage={scale} scrollY={scrollY} />}
-//    ListFooterComponent={
-//      <ProfileTopTab
-//        {...{
-//          startTopBarScroll,
-//          onChildScrollViewEndDrag,
-//          onChildEndReached,
-//        }}
-//      />
-//    }
-//    keyExtractor={(item, index) => index.toString() + "containerFlatList"}
-//    extraData={[
-//      startTopBarScroll,
-//      onParentEndReached,
-//      onChildScrollViewEndDrag,
-//      onChildEndReached,
-//    ]}
-//  />;

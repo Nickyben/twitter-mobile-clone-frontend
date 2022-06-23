@@ -1,8 +1,10 @@
-import { Component, Fragment, useEffect, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   Alert,
   Animated,
+  GestureResponderEvent,
   LayoutChangeEvent,
+  LayoutRectangle,
   Pressable,
   ScrollView,
 } from "react-native";
@@ -21,14 +23,19 @@ export default function ProfileTopContent({
   scaleImage,
   scrollY,
   onTopContentLayout,
-  animateFlatList,
+
+  topContentLayout,
 }: {
   userId?: string;
   scrollY: Animated.Value;
   onTopContentLayout: (e: LayoutChangeEvent) => void;
   scaleImage: Animated.AnimatedInterpolation;
-  animateFlatList?:(...args:any[])=>void
+  topContentLayout: LayoutRectangle;
 }) {
+  const topContentScrollY = useRef(scrollY).current;
+  const [touchPosition, setTouchPosition] = useState<number>(null);
+  const [lastScrollValue, setLastScrollValue] = useState<number>(0);
+
   const headerHeight = useHeaderHeight();
   const user = useAppSelector((state) => state.authReducer.user);
 
@@ -46,13 +53,37 @@ export default function ProfileTopContent({
     username: isVerified,
   } = user || {};
   const headerUrl = null;
+
+  const onTouchMove = useCallback(
+    (e: GestureResponderEvent) => {
+      let newScrollY = 0;
+
+      if (!touchPosition) {
+        return setTouchPosition((p) => e.nativeEvent.pageY);
+      } else {
+        newScrollY = touchPosition - e.nativeEvent.pageY;
+        if (newScrollY >= 0 && touchPosition > 0) {
+          scrollY.setValue(newScrollY);
+        } else {
+          return;
+        }
+      }
+    },
+    [scrollY, touchPosition]
+  );
+
+  const onTouch = useCallback((e: GestureResponderEvent) => {
+    const touchPosition = e.nativeEvent.pageY;
+    console.log({ touchPosition });
+  }, []);
+
   return (
     <Animated.ScrollView
-      scrollEnabled={true}
       onLayout={onTopContentLayout}
-      onTouchMove={(e) => console.log(e.nativeEvent.pageX)}
+      onTouchMove={onTouchMove}
+      // onTouchStart={onTouch}
       style={[
-        tw`pb-2 absolute  z-10 `,
+        tw`pb-2 absolute  z-10  bg-white`,
         { transform: [{ translateY: Animated.divide(scrollY, -1) }] },
       ]}>
       <Animated.View style={tw``}>
@@ -68,7 +99,7 @@ export default function ProfileTopContent({
           ) : null}
         </Animated.View>
 
-        <View style={tw`px-4`}>
+        <Animated.View style={tw`px-4`}>
           <Animated.View
             style={{
               ...tw` flex-row items-end justify-between -mt-[${
@@ -138,7 +169,7 @@ export default function ProfileTopContent({
               );
             })}
           </View>
-          <View style={tw` flex-row mt-2  ml-2`}>
+          <View style={tw` flex-row mt-2  ml-2  self-start`} transparent>
             <Text style={tw`text-sm text-gray-700 font-bold `}>
               {followingCount}{" "}
               <Text style={tw`text-sm text-gray-500 font-normal `}> Following</Text>
@@ -148,7 +179,7 @@ export default function ProfileTopContent({
               <Text style={tw`text-sm text-gray-500 font-normal `}> Followers</Text>
             </Text>
           </View>
-        </View>
+        </Animated.View>
       </Animated.View>
     </Animated.ScrollView>
   );

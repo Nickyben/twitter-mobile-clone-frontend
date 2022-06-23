@@ -54,7 +54,7 @@ export function ProfileTopTab(parentProp: ProfileTabScreenParams) {
                       topContentHeight * 2,
                     ],
                     outputRange: [
-                      -1,
+                      0,
                       0,
                       0,
                       headerHeight - topContentHeight,

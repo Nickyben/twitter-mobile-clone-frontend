@@ -18,7 +18,13 @@ import {
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CreateAccountInputs } from "../validation/types";
-import { Animated, LayoutRectangle, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
+import {
+  Animated,
+  LayoutRectangle,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from "react-native";
+import { LegacyRef } from "react";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

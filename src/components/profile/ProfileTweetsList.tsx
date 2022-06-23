@@ -17,8 +17,7 @@ import {
 import { Button } from "react-native-elements";
 
 import { Text, View } from "../../components/Themed";
-import { useAppDispatch } from "../../hooks/redux";
-import { useProfileScroll } from "../../hooks/useProfileScroll";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   ProfileTabScreenParams,
   ProfileTopTabParamList,
@@ -36,6 +35,7 @@ export default function ProfileTweetsList({
   listKey,
   animateFlatListScroll,
   scrollY,
+  // flatListRef,
   topContentLayout,
 }: IProps) {
   const flatListRef: LegacyRef<Animated.FlatList<number>> = useRef(null);
@@ -44,39 +44,34 @@ export default function ProfileTweetsList({
   const isFocused = useIsFocused();
   const headerHeight = useHeaderHeight();
   const [listTopLayout, setListTopLayout] = useState<LayoutRectangle>();
-  const animateScroll = Animated.event(
-    [
-      {
-        nativeEvent: {
-          contentOffset: {
-            y: scrollY,
-          },
-        },
-      },
-    ],
-    { useNativeDriver: true }
-  );
+  const user = useAppSelector((state) => state.authReducer.user);
 
   const renderItem = useCallback(({ item }) => {
-    return <Tweet {...{}} />;
+    return <Tweet {...{author:user}} />;
   }, []);
 
   useEffect(() => {
     const flatList = flatListRef?.current as FlatList;
     const scrollYListener = flatListScrollY.addListener(({ value }) => {
-      if (!isFocused && value < Number(listTopLayout?.height) - headerHeight) {
-        !isFocused && flatList.scrollToOffset({ offset: value, animated: false });
+      if (!isFocused) {
+        if (listTopLayout?.height) {
+          if (value < Number(listTopLayout?.height) - headerHeight) {
+            flatList.scrollToOffset({ offset: value, animated: true });
+          }
+        } else {
+          flatList.scrollToOffset({ offset: value, animated: true });
+        }
       }
-
-      console.log({  value });
+      if (isFocused) {
+        //
+      }
     });
 
     return () => flatListScrollY.removeListener(scrollYListener);
-  }, [isFocused]);
+  }, [isFocused, listTopLayout?.height, headerHeight]);
 
   const onListTopLayout = useCallback(
     ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-      console.log({layoutHeight:layout.height})
       setListTopLayout(layout);
     },
     []
