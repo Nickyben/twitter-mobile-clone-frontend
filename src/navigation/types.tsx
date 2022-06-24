@@ -197,6 +197,7 @@ export type ProfileTabScreenParams = {
   animateFlatListScroll?: (...args: unknown[]) => void;
   listKey?: string;
   scrollY?: Animated.Value;
+  scrollY2?: Animated.Value;
   scaleY?: Animated.AnimatedInterpolation;
   topContentLayout?: LayoutRectangle;
 };

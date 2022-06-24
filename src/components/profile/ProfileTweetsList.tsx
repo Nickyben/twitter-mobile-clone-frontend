@@ -35,20 +35,24 @@ export default function ProfileTweetsList({
   listKey,
   animateFlatListScroll,
   scrollY,
+  scrollY2,
   // flatListRef,
   topContentLayout,
 }: IProps) {
   const flatListRef: LegacyRef<Animated.FlatList<number>> = useRef(null);
   const topContentHeight = topContentLayout?.height || 0;
   const flatListScrollY = useRef(scrollY).current;
+    const flatListScrollY2 = useRef(scrollY2).current;
+
   const isFocused = useIsFocused();
+  const [isTouched, setIsTouched] = useState<boolean>(false)
   const headerHeight = useHeaderHeight();
   const [listTopLayout, setListTopLayout] = useState<LayoutRectangle>();
   const user = useAppSelector((state) => state.authReducer.user);
 
   const renderItem = useCallback(({ item }) => {
-    return <Tweet {...{author:user}} />;
-  }, []);
+    return <Tweet {...{ author: user }} />;
+  }, [user]);
 
   useEffect(() => {
     const flatList = flatListRef?.current as FlatList;
@@ -56,18 +60,32 @@ export default function ProfileTweetsList({
       if (!isFocused) {
         if (listTopLayout?.height) {
           if (value < Number(listTopLayout?.height) - headerHeight) {
-            flatList.scrollToOffset({ offset: value, animated: true });
+            flatList.scrollToOffset({ offset: value, animated: false });
           }
         } else {
-          flatList.scrollToOffset({ offset: value, animated: true });
+          flatList.scrollToOffset({ offset: value, animated: false });
         }
-      }
-      if (isFocused) {
-        //
       }
     });
 
     return () => flatListScrollY.removeListener(scrollYListener);
+  }, [isFocused, listTopLayout?.height, headerHeight]);
+
+  useEffect(() => {
+    const flatList = flatListRef?.current as FlatList;
+    const scrollY2Listener = flatListScrollY2.addListener(({ value }) => {
+      if (isFocused) {
+        if (listTopLayout?.height) {
+          if (value < Number(listTopLayout?.height) - headerHeight) {
+            flatList.scrollToOffset({ offset: value, animated: false });
+          }
+        } else {
+         flatList.scrollToOffset({ offset: value, animated: false });
+        }
+      }
+    });
+
+    return () => flatListScrollY2.removeListener(scrollY2Listener);
   }, [isFocused, listTopLayout?.height, headerHeight]);
 
   const onListTopLayout = useCallback(
@@ -80,7 +98,9 @@ export default function ProfileTweetsList({
   return (
     <Animated.FlatList
       ref={flatListRef}
-      onScroll={isFocused ? animateFlatListScroll : () => null}
+      onScroll={isFocused && isTouched ? animateFlatListScroll : () => null}
+      onTouchStart={() => setIsTouched(true)}
+      onTouchEnd={() => setIsTouched(false)}
       style={[]}
       data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17]}
       renderItem={renderItem}

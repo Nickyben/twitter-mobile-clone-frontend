@@ -31,6 +31,8 @@ export default function ProfileScreen({
     y: 0,
   });
   const scrollY = useRef(new Animated.Value(0)).current;
+  const scrollY2 = useRef(new Animated.Value(0)).current;
+
   const animateFlatListScroll = Animated.event(
     [
       {
@@ -120,13 +122,13 @@ export default function ProfileScreen({
     <Animated.View style={[tw`flex-1 bg-transparent `]}>
       <ProfileTopContent
         scaleImage={scale}
-        scrollY={scrollY}
-        {...{ onTopContentLayout, topContentLayout }}
+        {...{ onTopContentLayout, topContentLayout, scrollY2, scrollY }}
       />
 
       <ProfileTopTab
         {...{
           scrollY,
+          scrollY2,
           animateFlatListScroll,
           topContentLayout,
         }}
@@ -142,4 +144,3 @@ export default function ProfileScreen({
     </Animated.View>
   );
 }
-

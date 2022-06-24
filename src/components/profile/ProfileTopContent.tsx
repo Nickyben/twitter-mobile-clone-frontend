@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { LegacyRef, useCallback, useRef, useState } from "react";
 import {
   Alert,
   Animated,
@@ -22,12 +22,13 @@ export default function ProfileTopContent({
   userId,
   scaleImage,
   scrollY,
+  scrollY2,
   onTopContentLayout,
-
   topContentLayout,
 }: {
   userId?: string;
   scrollY: Animated.Value;
+  scrollY2: Animated.Value;
   onTopContentLayout: (e: LayoutChangeEvent) => void;
   scaleImage: Animated.AnimatedInterpolation;
   topContentLayout: LayoutRectangle;
@@ -53,6 +54,7 @@ export default function ProfileTopContent({
     username: isVerified,
   } = user || {};
   const headerUrl = null;
+  const scrollViewRef: LegacyRef<ScrollView> = useRef(null);
 
   const onTouchMove = useCallback(
     (e: GestureResponderEvent) => {
@@ -64,24 +66,22 @@ export default function ProfileTopContent({
         newScrollY = touchPosition - e.nativeEvent.pageY;
         if (newScrollY >= 0 && touchPosition > 0) {
           scrollY.setValue(newScrollY);
+          scrollY2.setValue(newScrollY);
         } else {
           return;
         }
       }
     },
-    [scrollY, touchPosition]
+    [scrollY, scrollY2, touchPosition]
   );
-
-  const onTouch = useCallback((e: GestureResponderEvent) => {
-    const touchPosition = e.nativeEvent.pageY;
-    console.log({ touchPosition });
-  }, []);
 
   return (
     <Animated.ScrollView
+      ref={scrollViewRef}
       onLayout={onTopContentLayout}
+      // onScroll={() => alert("hey")}
+
       onTouchMove={onTouchMove}
-      // onTouchStart={onTouch}
       style={[
         tw`pb-2 absolute  z-10  bg-white`,
         { transform: [{ translateY: Animated.divide(scrollY, -1) }] },
