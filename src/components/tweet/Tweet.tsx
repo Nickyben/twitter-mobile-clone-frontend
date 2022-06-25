@@ -9,16 +9,12 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 import { Animated, View } from "react-native";
 import { Avatar, Button } from "react-native-elements";
-import { Text } from "../../src/components/Themed";
-import Colors, { tintColorDark, tintColorPrimary } from "../../src/constants/Colors";
-import {
-  FollowUser,
-  InterestCategories,
-  InterestItem,
-} from "../../src/data/onboarding";
-import tw from "../../src/styles/tailwind/tailwind";
-import { ITweet } from "../models/types/tweet";
-import { useIsFocused } from "@react-navigation/native";
+import { Text } from "../Themed";
+import Colors, { tintColorDark, tintColorPrimary } from "../../constants/Colors";
+
+import tw from "../../styles/tailwind/tailwind";
+import { ITweet } from "../../models/types/tweet";
+import TweetAction from "./TweetAction";
 
 interface IProps extends Partial<ITweet> {
   handlerFollow?: (userId: string) => void;
@@ -29,7 +25,11 @@ interface IProps extends Partial<ITweet> {
 const Tweet = ({ tweetMethod, id, author, contentText, imageUrls }: IProps) => {
   const { avatarUrl, isVerified, username, fullName } = author || {};
   return (
-    <View style={[tw` px-5 py-2  border-b-1 border-gray-400   `, {borderBottomWidth:1/5}]}>
+    <View
+      style={[
+        tw` px-5 py-2  border-b-1 border-gray-400   `,
+        { borderBottomWidth: 1 / 5 },
+      ]}>
       {/* REACTION INFO */}
       <View style={tw` flex-1 flex-row  `}>
         <EvilIcons
@@ -49,9 +49,7 @@ const Tweet = ({ tweetMethod, id, author, contentText, imageUrls }: IProps) => {
         <Avatar
           size={50}
           rounded
-          source={
-            '' ? { uri: avatarUrl } : require("../../assets/images/twitterIcon.png")
-          }
+          source={require("../../../assets/images/twitterIcon.png")}
         />
 
         <View style={tw`flex-1 ml-2  `}>
@@ -97,15 +95,25 @@ const Tweet = ({ tweetMethod, id, author, contentText, imageUrls }: IProps) => {
               return (
                 <Animated.Image
                   key={index}
-                  style={[tw`border-1 border-gray-100 rounded-xl w-full h-[200px] mt-2`]}
+                  style={[
+                    tw`border-1 border-gray-100 rounded-xl w-full h-[200px] mt-2`,
+                  ]}
                   source={
                     imageUrl
                       ? { uri: imageUrl }
-                      : require("../../assets/images/twitterIcon.png")
+                      : require("../../../assets/images/twitterIcon.png")
                   }
                 />
               );
             })}
+
+          {/* Actions */}
+          <View style={tw`flex-1 flex-row justify-between items-center  mt-3 py-2 `}>
+            <TweetAction actionType="reply" />
+            <TweetAction actionType="retweet" />
+            <TweetAction actionType="like" />
+            <TweetAction actionType="share" />
+          </View>
         </View>
       </View>
     </View>

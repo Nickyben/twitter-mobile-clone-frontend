@@ -1,111 +1,33 @@
-import { ScrollView, StyleSheet } from "react-native";
+import React, { LegacyRef, useRef } from "react";
+import { Animated, ScrollView, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 
 import { Text, View } from "../../components/Themed";
-import { useAppDispatch } from "../../hooks/redux";
+import Tweet from "../../components/tweet/Tweet";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fakeLogout } from "../../redux/actions/auth/loginAction";
 import tw from "../../styles/tailwind/tailwind";
 
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.authReducer.user);
 
+  const flatListRef: LegacyRef<Animated.FlatList<number>> = useRef(null);
+  const renderItem = React.useCallback(
+    ({ item }) => {
+      return <Tweet {...{ author: user }} />;
+    },
+    [user]
+  );
   return (
-    <View style={styles.container} >
-      <Text style={styles.title}>Home Screen</Text>
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-      <Button
-        title="Logout"
-        buttonStyle={tw`btn`}
-        containerStyle={tw`mt-6`}
-        titleStyle={tw`btn-text`}
-        onPress={() => dispatch(fakeLogout())}
-      />
-    </View>
+    <Animated.FlatList
+      ref={flatListRef}
+      style={[]}
+      data={Array.from({ length: 17 })}
+      renderItem={renderItem}
+      ListHeaderComponent={<View style={tw`    `}></View>}
+      contentContainerStyle={[tw`pb-5 grow   `]}
+      keyExtractor={(item, index) => index.toString() + "topTabFlatList"}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

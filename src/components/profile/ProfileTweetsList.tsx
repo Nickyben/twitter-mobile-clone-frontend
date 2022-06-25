@@ -25,7 +25,7 @@ import {
 } from "../../navigation/types";
 import { fakeLogout } from "../../redux/actions/auth/loginAction";
 import tw from "../../styles/tailwind/tailwind";
-import Tweet from "../Tweet";
+import Tweet from "../tweet/Tweet";
 import ProfileTopContent from "./ProfileTopContent";
 
 type IProps = ProfileTopTabScreenProps<keyof ProfileTopTabParamList> &
@@ -102,7 +102,7 @@ export default function ProfileTweetsList({
       onTouchStart={() => setIsTouched(true)}
       onTouchEnd={() => setIsTouched(false)}
       style={[]}
-      data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17]}
+      data={Array.from({length:17})}
       renderItem={renderItem}
       ListHeaderComponent={
         <View
