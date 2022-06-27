@@ -79,11 +79,12 @@ export default function ProfileTopContent({
     <Animated.ScrollView
       ref={scrollViewRef}
       onLayout={onTopContentLayout}
+      // scrollEventThrottle={16}
       // onScroll={() => alert("hey")}
 
       onTouchMove={onTouchMove}
       style={[
-        tw`pb-2 absolute  z-10  bg-white`,
+        tw`pb-2 absolute  z-10  bg-white w-full`,
         { transform: [{ translateY: Animated.divide(scrollY, -1) }] },
       ]}>
       <Animated.View style={tw``}>

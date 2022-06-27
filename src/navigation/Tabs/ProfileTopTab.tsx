@@ -51,7 +51,7 @@ export function ProfileTopTab(parentProp: ProfileTabScreenParams) {
                         ? topContentHeight - headerHeight
                         : 0,
                       topContentHeight,
-                      topContentHeight * 2,
+                      topContentHeight + 2,
                     ],
                     outputRange: [
                       0,
@@ -91,8 +91,7 @@ export function ProfileTopTab(parentProp: ProfileTabScreenParams) {
                     listKey={props.route.key}
                     {...props}
                     {...parentProp}
-                    // onTabBarScrollToTop={parentProp.onTabBarScrollToTop}
-                    // startScrollTabBar={parentProp.startScrollTabBar}
+                   
                   />
                 )}
               </TopTab.Screen>

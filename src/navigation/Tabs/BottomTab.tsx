@@ -86,7 +86,7 @@ export function BottomTabNavigator() {
           headerTitleAlign: "center",
           headerTransparent: true,
           headerTintColor: Colors[colorScheme].primary,
-          headerStyle: { backgroundColor: Colors[colorScheme].background },
+          headerStyle: { backgroundColor: Colors[colorScheme].background, },
           headerTitle: () => (
             <Image
               source={require("../../../assets/images/twitterLogoBlue.png")}

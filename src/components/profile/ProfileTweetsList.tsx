@@ -42,7 +42,7 @@ export default function ProfileTweetsList({
   const flatListRef: LegacyRef<Animated.FlatList<number>> = useRef(null);
   const topContentHeight = topContentLayout?.height || 0;
   const flatListScrollY = useRef(scrollY).current;
-    const flatListScrollY2 = useRef(scrollY2).current;
+  const flatListScrollY2 = useRef(scrollY2).current;
 
   const isFocused = useIsFocused();
   const [isTouched, setIsTouched] = useState<boolean>(false)
@@ -80,7 +80,7 @@ export default function ProfileTweetsList({
             flatList.scrollToOffset({ offset: value, animated: false });
           }
         } else {
-         flatList.scrollToOffset({ offset: value, animated: false });
+          flatList.scrollToOffset({ offset: value, animated: false });
         }
       }
     });
@@ -102,7 +102,7 @@ export default function ProfileTweetsList({
       onTouchStart={() => setIsTouched(true)}
       onTouchEnd={() => setIsTouched(false)}
       style={[]}
-      data={Array.from({length:17})}
+      data={Array.from({ length: 17 })}
       renderItem={renderItem}
       ListHeaderComponent={
         <View
@@ -111,6 +111,7 @@ export default function ProfileTweetsList({
       }
       contentContainerStyle={[tw`pb-5 grow   `]}
       keyExtractor={(item, index) => index.toString() + "topTabFlatList"}
+      extraData={[isTouched]}
     />
   );
 }
