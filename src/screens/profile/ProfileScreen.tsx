@@ -46,8 +46,8 @@ export default function ProfileScreen({
     { useNativeDriver: true }
   );
 
-  const inputRange = [-1, 0, headerHeight / 2, headerHeight, headerHeight * 1.5];
-  const outputRange = [1, 1, 1 / 1.5, 1 / 2, 1 / 2];
+  const inputRange = [-1, 0, headerHeight*0.5, headerHeight-1, headerHeight + 1];
+  const outputRange = [1, 1,0.75, 0.5, 0.5];
 
   const scale = scrollY.interpolate({
     inputRange,
@@ -56,7 +56,7 @@ export default function ProfileScreen({
 
   const headerOpacity = scrollY.interpolate({
     inputRange,
-    outputRange: [0, 0, 1 / 1.25, 1, 1],
+    outputRange: [0, 0, 0.75, 1, 1],
   });
 
   const onTopContentLayout = useCallback(
@@ -66,9 +66,7 @@ export default function ProfileScreen({
     []
   );
 
-  const onScroll = useCallback(({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-    setTopContentLayout(layout);
-  }, []);
+  
 
   useEffect(() => {
     setOptions({

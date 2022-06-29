@@ -21,16 +21,15 @@ import tw from "../../styles/tailwind/tailwind";
 export default function HomeScreen({
   navigation: { setOptions },
   flatListRef,
-  
 }: HomeTopTabScreenProps<"Home"> & { headerHeight?: number } & ReturnType<
     typeof useCollapsStickyHeader
   >) {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authReducer.user);
-  const headerHeight = useHeaderHeight();
-    const {translateY,handleScroll} = useCollapsStickyHeader({
-      headerHeight,
-    });
+  const headerHeight = useHeaderHeight() + 20;
+  const { translateY, handleScroll } = useCollapsStickyHeader({
+    headerHeight,
+  });
 
   const renderItem = React.useCallback(
     ({ item }) => {
@@ -39,22 +38,42 @@ export default function HomeScreen({
     [user]
   );
 
-  const SpacesHeader = ({ yellow }: { yellow?: boolean }) => {
+  const renderSpacesItem = React.useCallback(
+    ({ item }) => {
+      return (
+        <SpaceHeaderItem
+          title="Space of elites"
+          listeners={Array.from({ length: 3 })}
+          listenersCount={589}
+        />
+      );
+    },
+    [user]
+  );
+
+  const SpacesHeader = () => {
     return (
       <Animated.View
         style={[
-          tw`bg-green-400 w-full h-[${headerHeight}px] absolute top-0 z-100`,
-          { transform: [{ translateY }] },
+          tw`w-full h-[${headerHeight}px] absolute top-0 z-100   justify-center border-b-gray-300  bg-white `,
+          { transform: [{ translateY }], borderBottomWidth: 0.2 },
         ]}>
-        <SpaceHeaderItem listeners={Array.from({length:3})}  listenersCount={589} />
-        </Animated.View>
+        <Animated.FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          style={[]}
+          data={Array.from({ length: 17 })}
+          renderItem={renderSpacesItem}
+          contentContainerStyle={[tw`pl-4 grow  items-end pb-1`]}
+          keyExtractor={(item, index) => index.toString() + "spaceItemsFlatList"}
+        />
+      </Animated.View>
     );
   };
 
   return (
     <>
       <SpacesHeader />
-
       <Animated.FlatList
         ref={flatListRef}
         onScroll={handleScroll}
@@ -62,7 +81,6 @@ export default function HomeScreen({
         style={[]}
         data={Array.from({ length: 17 })}
         renderItem={renderItem}
-        // ListHeaderComponent={<SpacesHeader />}
         contentContainerStyle={[tw`pb-5 grow mt-[${headerHeight}px] `]}
         keyExtractor={(item, index) => index.toString() + "topTabFlatList"}
       />

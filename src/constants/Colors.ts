@@ -2,7 +2,12 @@ export const tintColorLight = "#000";
 export const tintColorDark = "#fff";
 export const tintColorPrimary = "#1DA1F2";
 export const lightPrimary = "#f5ffff";
-
+export const spacesLinearGradient: Array<string> = [
+  "#5d81ff",
+  "#7d81ff",
+  "#9d81ff",
+  "#bd81ff",
+].reverse();
 
 export default {
   light: {

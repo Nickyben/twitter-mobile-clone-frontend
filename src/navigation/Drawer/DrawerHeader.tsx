@@ -37,7 +37,7 @@ export default function CustomDrawerHeader({
           rounded
           source={
             avatarUrl
-              ? { uri: `${BASE_URL}/${avatarUrl}` }
+              ? { uri: avatarUrl}
               : require("../../../assets/images/user.png")
           }
         />
@@ -46,7 +46,7 @@ export default function CustomDrawerHeader({
           rounded
           source={
             avatarUrl
-              ? { uri: `${BASE_URL}/${avatarUrl}` }
+              ? { uri: avatarUrl}
               : require("../../../assets/images/user.png")
           }
         />

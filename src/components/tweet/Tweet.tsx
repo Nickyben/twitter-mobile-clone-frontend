@@ -27,8 +27,8 @@ const Tweet = ({ tweetMethod, id, author, contentText, imageUrls }: IProps) => {
   return (
     <View
       style={[
-        tw` px-5 py-2  border-b-1 border-gray-400   `,
-        { borderBottomWidth: 1 / 5 },
+        tw` px-5 py-2   border-gray-200   `,
+        { borderBottomWidth: 0.2 },
       ]}>
       {/* REACTION INFO */}
       <View style={tw` flex-1 flex-row  `}>

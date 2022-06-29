@@ -39,9 +39,9 @@ export default function ProfileTopContent({
 
   const headerHeight = useHeaderHeight();
   const user = useAppSelector((state) => state.authReducer.user);
-
   const {
     avatarUrl,
+    headerUrl,
     fullName,
     username,
     bio,
@@ -53,7 +53,7 @@ export default function ProfileTopContent({
     followingCount,
     username: isVerified,
   } = user || {};
-  const headerUrl = null;
+
   const scrollViewRef: LegacyRef<ScrollView> = useRef(null);
 
   const onTouchMove = useCallback(
@@ -90,12 +90,12 @@ export default function ProfileTopContent({
       <Animated.View style={tw``}>
         <Animated.View
           style={{
-            ...tw`  py-5 bg-primary h-[${headerHeight * 2}px]   `,
+            ...tw`   bg-primary h-[${headerHeight * 2}px]   `,
           }}>
           {headerUrl ? (
             <Image
-              source={{ uri: `${Config.BASE_URL}/${headerUrl}` }}
-              height={headerHeight * 2}
+              source={{ uri: headerUrl }}
+              style={tw`w-full h-[${headerHeight * 2}px]`}
             />
           ) : null}
         </Animated.View>
@@ -105,7 +105,7 @@ export default function ProfileTopContent({
             style={{
               ...tw` flex-row items-end justify-between -mt-[${
                 headerHeight / 2
-              }px]  `,
+              }px] `,
             }}>
             <Animated.Image
               width={headerHeight}
@@ -116,12 +116,29 @@ export default function ProfileTopContent({
                 ...tw`border-4 border-white rounded-full  bottom-0`,
                 transform: [
                   { scale: scaleImage },
-                  { translateY: Animated.divide(scrollY, 2.5) },
+                  {
+                    translateY: scrollY.interpolate({
+                      inputRange: [
+                        -1,
+                        0,
+                        headerHeight / 2,
+                        headerHeight,
+                        headerHeight * 1.5,
+                      ],
+                      outputRange: [
+                        0,
+                        0,
+                        headerHeight * 0.25,
+                        headerHeight * 0.5,
+                        headerHeight * 0.5,
+                      ],
+                    }),
+                  },
                 ],
               }}
               source={
                 avatarUrl
-                  ? { uri: `${Config.BASE_URL}/${avatarUrl}` }
+                  ? { uri: avatarUrl }
                   : require("../../../assets/images/user.png")
               }
             />

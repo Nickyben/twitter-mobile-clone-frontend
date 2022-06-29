@@ -7,7 +7,6 @@ export const loginAction = (loginPayload: LoginInputs) => {
   return async (dispatch, getState, extraArg) => {
     try {
       const res = await fetch(ENDPOINTS.login, {
-        
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -20,7 +19,6 @@ export const loginAction = (loginPayload: LoginInputs) => {
       if (res.ok) {
         resData = await res.json();
         const { token, user } = resData?.data || {};
-
         return dispatch({
           type: AuthActionTypes.LOGIN,
           payload: {

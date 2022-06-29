@@ -68,7 +68,7 @@ export function BottomTabNavigator() {
               containerStyle={tw`ml-4`}
               source={
                 avatarUrl
-                  ? { uri: `${BASE_URL}/${avatarUrl}` }
+                  ? { uri: avatarUrl}
                   : require("../../../assets/images/user.png")
               }
             />
