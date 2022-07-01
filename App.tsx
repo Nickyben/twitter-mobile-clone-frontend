@@ -9,7 +9,6 @@ import tw from "./src/styles/tailwind/tailwind";
 import { Provider } from "react-redux";
 import { persistor, store } from "./src/redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { Text, View } from "./src/components/Themed";
 import Toast from "react-native-toast-message";
 import { toastConfig } from "./src/constants/ToastConfig";
 
@@ -33,7 +32,7 @@ export default function App() {
               <Navigation colorScheme={colorScheme} />
             </PersistGate>
           </Provider>
-          <StatusBar />
+          <StatusBar style='auto'/>
         </SafeAreaProvider>
         <Toast config={toastConfig} />
       </>

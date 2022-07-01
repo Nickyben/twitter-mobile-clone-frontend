@@ -53,7 +53,7 @@ const SpaceHeaderItem = ({ listeners, listenersCount, title }: IProps) => {
           +{listenersCount}
         </Text>
       </LinearGradient>
-      <Text style={tw`text-sm text-gray-600 self-center`}>{title}</Text>
+      <Text style={tw`text-xs text-gray-600 self-center`}>{title}</Text>
     </View>
   );
 };

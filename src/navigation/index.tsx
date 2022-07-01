@@ -61,7 +61,7 @@ export default function Navigation({ colorScheme }: IProps) {
 
   React.useEffect(() => {
     !isReady && checkLinkingInitialUrl();
-  }, [checkLinkingInitialUrl]);
+  }, [checkLinkingInitialUrl, isReady]);
 
   if (!isReady) {
     return null;
